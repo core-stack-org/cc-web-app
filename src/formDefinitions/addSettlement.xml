@@ -1,0 +1,578 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Settlement Form</h:title>
+        <model odk:xforms-version="1.0.0">
+            <itext>
+                <translation lang="English (en)">
+                    <text id="/data/GPS_point:label">
+                        <value>GPS point to be marked of the area</value>
+                    </text>
+                    <text id="/data/GPS_point/latlon:label">
+                        <value>Take a GPS point</value>
+                    </text>
+                    <text id="/data/sett_id:label">
+                        <value>Settlement's ID</value>
+                    </text>
+                    <text id="/data/sett_name:label">
+                        <value>Settlement's name</value>
+                    </text>
+                    <text id="/data/block_name:label">
+                        <value>Block name</value>
+                    </text>
+                    <text id="/data/sett_caste_type:label">
+                        <value>Settlement type</value>
+                    </text>
+                    <text id="/data/single_caste_group:label">
+                        <value>Select the caste group</value>
+                    </text>
+                    <text id="/data/generated_note_name_15:label">
+                        <value>&lt;span style="color:red"&gt;Request you to fill the form separately for each caste group.&lt;/span&gt;</value>
+                    </text>
+                    <text id="/data/mixed_caste_group:label">
+                        <value>For which caste group are you filling the survey in the multi caste settlement?</value>
+                    </text>
+                    <text id="/data/num_hh:label">
+                        <value>How many households are there in this settlement?</value>
+                    </text>
+                    <text id="/data/bpl_hh:label">
+                        <value>Total number of households with BPL cards in this settlement?</value>
+                    </text>
+                    <text id="/data/distance_block:label">
+                        <value>Distance of the settlement from the block headquarters</value>
+                    </text>
+                    <text id="/data/connected_roads:label">
+                        <value>Is the settlement connected by road throughout the year?</value>
+                    </text>
+                    <text id="/data/electricity:label">
+                        <value>Does the settlement have access to electricity?</value>
+                    </text>
+                    <text id="/data/farmer_family:label">
+                        <value>Number of farmer families based on land ownership in this settlement</value>
+                    </text>
+                    <text id="/data/farmer_family/landless_farmers:label">
+                        <value>Landless farmers</value>
+                    </text>
+                    <text id="/data/farmer_family/marginal_farmers:label">
+                        <value>Marginal farmers</value>
+                    </text>
+                    <text id="/data/farmer_family/small_farmers:label">
+                        <value>Small farmers</value>
+                    </text>
+                    <text id="/data/farmer_family/medium_farmers:label">
+                        <value>Medium farmers</value>
+                    </text>
+                    <text id="/data/farmer_family/big_farmers:label">
+                        <value>Big farmers</value>
+                    </text>
+                    <text id="/data/livestock_census:label">
+                        <value>Livestock census in this settlement</value>
+                    </text>
+                    <text id="/data/livestock_census/cattle:label">
+                        <value>Cattle</value>
+                    </text>
+                    <text id="/data/livestock_census/goats:label">
+                        <value>Goats</value>
+                    </text>
+                    <text id="/data/livestock_census/sheep:label">
+                        <value>Sheep</value>
+                    </text>
+                    <text id="/data/livestock_census/poultry:label">
+                        <value>Poultry</value>
+                    </text>
+                    <text id="/data/livestock_census/piggery:label">
+                        <value>Piggery</value>
+                    </text>
+                    <text id="/data/livestock_census/ox:label">
+                        <value>Ox</value>
+                    </text>
+                    <text id="/data/mgnrega_information:label">
+                        <value>MGNREGA INFORMATION</value>
+                    </text>
+                    <text id="/data/mgnrega_information/nrega_applied:label">
+                        <value>How many households have applied for NREGA job cards in this settlement?</value>
+                    </text>
+                    <text id="/data/mgnrega_information/nrega_job_card:label">
+                        <value>How many households have NREGA job cards in this settlement?</value>
+                    </text>
+                    <text id="/data/mgnrega_information/nrega_work_days:label">
+                        <value>How many days of work did households receive under NREGA in the previous year in this settlement?</value>
+                    </text>
+                    <text id="/data/mgnrega_information/generated_note_name_43:label">
+                        <value>&lt;span style="color:red"&gt;To calculate the total days of work, add up the workdays provided to all households with job cards as recorded in the MGNREGA database&lt;/span&gt;</value>
+                    </text>
+                    <text id="/data/mgnrega_information/nrega_demands:label">
+                        <value>Were the households involved in the demand planning and were demands put up for new NRM works in this settlement?</value>
+                    </text>
+                    <text id="/data/mgnrega_information/past_work_demands:label">
+                        <value>What kind of work demands did the settlement proposed in the past?</value>
+                    </text>
+                    <text id="/data/mgnrega_information/issues:label">
+                        <value>What are the three main issues with MGNREGA?</value>
+                    </text>
+                    <text id="/data/mgnrega_information/community_collaboration:label">
+                        <value>Is the community willing to come together collectively to raise the work demands such as water structures?</value>
+                    </text>
+                    <text id="/data/other_info:label">
+                        <value>Any other information</value>
+                    </text>
+                    <text id="/data/generated_note_name_50:label">
+                        <value>&lt;span style="color:red"&gt; DO NOT MODIFY THE PLAN NAME AND PLAN ID&lt;/span&gt;</value>
+                    </text>
+                    <text id="/data/plan_id:label">
+                        <value>Plan ID</value>
+                    </text>
+                    <text id="/data/plan_name:label">
+                        <value>Plan Name</value>
+                    </text>
+                </translation>
+            </itext>
+            <instance>
+                <data id="settlement_form" version="1.0.7">
+                    <start/>
+                    <end/>
+                    <today/>
+                    <deviceid/>
+                    <GPS_point>
+                        <latlon/>
+                    </GPS_point>
+                    <sett_id/>
+                    <sett_name/>
+                    <block_name/>
+                    <sett_caste_type/>
+                    <single_caste_group/>
+                    <generated_note_name_15/>
+                    <mixed_caste_group/>
+                    <num_hh/>
+                    <bpl_hh/>
+                    <distance_block/>
+                    <connected_roads/>
+                    <electricity/>
+                    <farmer_family>
+                        <landless_farmers/>
+                        <marginal_farmers/>
+                        <small_farmers/>
+                        <medium_farmers/>
+                        <big_farmers/>
+                    </farmer_family>
+                    <livestock_census>
+                        <cattle/>
+                        <goats/>
+                        <sheep/>
+                        <poultry/>
+                        <piggery/>
+                        <ox/>
+                    </livestock_census>
+                    <mgnrega_information>
+                        <nrega_applied/>
+                        <nrega_job_card/>
+                        <nrega_work_days/>
+                        <generated_note_name_43/>
+                        <nrega_demands/>
+                        <past_work_demands/>
+                        <past_work_demands_other/>
+                        <issues/>
+                        <issues_other/>
+                        <community_collaboration/>
+                    </mgnrega_information>
+                    <other_info/>
+                    <generated_note_name_50/>
+                    <plan_id/>
+                    <plan_name/>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start" type="dateTime"/>
+            <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime"/>
+            <bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date"/>
+            <bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid" type="string"/>
+            <bind nodeset="/data/GPS_point/latlon" required="true()" type="geopoint"/>
+            <bind calculate="once(uuid(10))" nodeset="/data/sett_id" readonly="true()" type="string"/>
+            <bind constraint="regex(., '[a-zA-Z]+')" jr:constraintMsg="Only accepts a-z, A-Z characters" nodeset="/data/sett_name" required="true()" type="string"/>
+            <bind nodeset="/data/block_name" type="string"/>
+            <bind nodeset="/data/sett_caste_type" type="string"/>
+            <bind nodeset="/data/single_caste_group" relevant=" /data/sett_caste_type ='single_caste_group'" type="string"/>
+            <bind nodeset="/data/generated_note_name_15" readonly="true()" type="string"/>
+            <bind nodeset="/data/mixed_caste_group" relevant=" /data/sett_caste_type ='mixed_caste_group'" type="string"/>
+            <bind constraint="regex(., '^[1-9]+$')" jr:constraintMsg="Number of households must be greater than or equal to 1" nodeset="/data/num_hh" type="int"/>
+            <bind nodeset="/data/bpl_hh" type="int"/>
+            <bind constraint="regex(., '^[0-9]+$')" nodeset="/data/distance_block" type="int"/>
+            <bind nodeset="/data/connected_roads" type="string"/>
+            <bind nodeset="/data/electricity" type="string"/>
+            <bind nodeset="/data/farmer_family/landless_farmers" type="int"/>
+            <bind nodeset="/data/farmer_family/marginal_farmers" type="int"/>
+            <bind nodeset="/data/farmer_family/small_farmers" type="int"/>
+            <bind nodeset="/data/farmer_family/medium_farmers" type="int"/>
+            <bind nodeset="/data/farmer_family/big_farmers" type="int"/>
+            <bind nodeset="/data/livestock_census/cattle" type="int"/>
+            <bind nodeset="/data/livestock_census/goats" type="int"/>
+            <bind nodeset="/data/livestock_census/sheep" type="int"/>
+            <bind nodeset="/data/livestock_census/poultry" type="int"/>
+            <bind nodeset="/data/livestock_census/piggery" type="int"/>
+            <bind nodeset="/data/livestock_census/ox" type="int"/>
+            <bind nodeset="/data/mgnrega_information/nrega_applied" type="int"/>
+            <bind nodeset="/data/mgnrega_information/nrega_job_card" type="int"/>
+            <bind constraint=".&gt;=1" jr:constraintMsg="NREGA work days must be greater than or equal to 1" nodeset="/data/mgnrega_information/nrega_work_days" type="int"/>
+            <bind nodeset="/data/mgnrega_information/generated_note_name_43" readonly="true()" type="string"/>
+            <bind nodeset="/data/mgnrega_information/nrega_demands" required="true()" type="string"/>
+            <bind nodeset="/data/mgnrega_information/past_work_demands" relevant=" /data/mgnrega_information/nrega_demands ='demands_fulfilled' or  /data/mgnrega_information/nrega_demands ='demands_not_met'" required="true()" type="string"/>
+            <bind nodeset="/data/mgnrega_information/past_work_demands_other" relevant="selected(../past_work_demands, 'other')" type="string"/>
+            <bind nodeset="/data/mgnrega_information/issues" type="string"/>
+            <bind nodeset="/data/mgnrega_information/issues_other" relevant="selected(../issues, 'other')" type="string"/>
+            <bind nodeset="/data/mgnrega_information/community_collaboration" required="true()" type="string"/>
+            <bind nodeset="/data/other_info" type="string"/>
+            <bind nodeset="/data/generated_note_name_50" readonly="true()" type="string"/>
+            <bind nodeset="/data/plan_id" type="string"/>
+            <bind nodeset="/data/plan_name" type="string"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body>
+        <group ref="/data/GPS_point">
+            <label ref="jr:itext('/data/GPS_point:label')"/>
+            <input appearance="minimal" ref="/data/GPS_point/latlon">
+                <label ref="jr:itext('/data/GPS_point/latlon:label')"/>
+            </input>
+        </group>
+        <input ref="/data/sett_id">
+            <label ref="jr:itext('/data/sett_id:label')"/>
+        </input>
+        <input ref="/data/sett_name">
+            <label ref="jr:itext('/data/sett_name:label')"/>
+        </input>
+        <input ref="/data/block_name">
+            <label ref="jr:itext('/data/block_name:label')"/>
+        </input>
+        <select1 ref="/data/sett_caste_type">
+            <label ref="jr:itext('/data/sett_caste_type:label')"/>
+            <item>
+                <label>Single Caste Group</label>
+                <value>single_caste_group</value>
+            </item>
+            <item>
+                <label>Mixed Caste Group</label>
+                <value>mixed_caste_group</value>
+            </item>
+        </select1>
+        <select1 ref="/data/single_caste_group">
+            <label ref="jr:itext('/data/single_caste_group:label')"/>
+            <item>
+                <label>GC</label>
+                <value>gc</value>
+            </item>
+            <item>
+                <label>SC</label>
+                <value>sc</value>
+            </item>
+            <item>
+                <label>ST</label>
+                <value>st</value>
+            </item>
+            <item>
+                <label>OBC</label>
+                <value>obc</value>
+            </item>
+        </select1>
+        <input ref="/data/generated_note_name_15">
+            <label ref="jr:itext('/data/generated_note_name_15:label')"/>
+        </input>
+        <select1 ref="/data/mixed_caste_group">
+            <label ref="jr:itext('/data/mixed_caste_group:label')"/>
+            <item>
+                <label>GC</label>
+                <value>gc</value>
+            </item>
+            <item>
+                <label>SC</label>
+                <value>sc</value>
+            </item>
+            <item>
+                <label>ST</label>
+                <value>st</value>
+            </item>
+            <item>
+                <label>OBC</label>
+                <value>obc</value>
+            </item>
+        </select1>
+        <input ref="/data/num_hh">
+            <label ref="jr:itext('/data/num_hh:label')"/>
+        </input>
+        <input ref="/data/bpl_hh">
+            <label ref="jr:itext('/data/bpl_hh:label')"/>
+        </input>
+        <input ref="/data/distance_block">
+            <label ref="jr:itext('/data/distance_block:label')"/>
+            <hint>in kilometers</hint>
+        </input>
+        <select1 ref="/data/connected_roads">
+            <label ref="jr:itext('/data/connected_roads:label')"/>
+            <item>
+                <label>Yes</label>
+                <value>yes</value>
+            </item>
+            <item>
+                <label>No</label>
+                <value>no</value>
+            </item>
+        </select1>
+        <select1 ref="/data/electricity">
+            <label ref="jr:itext('/data/electricity:label')"/>
+            <item>
+                <label>Yes</label>
+                <value>yes</value>
+            </item>
+            <item>
+                <label>No</label>
+                <value>no</value>
+            </item>
+        </select1>
+        <group ref="/data/farmer_family">
+            <label ref="jr:itext('/data/farmer_family:label')"/>
+            <input ref="/data/farmer_family/landless_farmers">
+                <label ref="jr:itext('/data/farmer_family/landless_farmers:label')"/>
+                <hint>no land</hint>
+            </input>
+            <input ref="/data/farmer_family/marginal_farmers">
+                <label ref="jr:itext('/data/farmer_family/marginal_farmers:label')"/>
+                <hint>less than 2.5 acres of land</hint>
+            </input>
+            <input ref="/data/farmer_family/small_farmers">
+                <label ref="jr:itext('/data/farmer_family/small_farmers:label')"/>
+                <hint>2.5 acres to 5 acres of land</hint>
+            </input>
+            <input ref="/data/farmer_family/medium_farmers">
+                <label ref="jr:itext('/data/farmer_family/medium_farmers:label')"/>
+                <hint>5 acres to 10 acres of land</hint>
+            </input>
+            <input ref="/data/farmer_family/big_farmers">
+                <label ref="jr:itext('/data/farmer_family/big_farmers:label')"/>
+                <hint>more than 10 acres of land</hint>
+            </input>
+        </group>
+        <group ref="/data/livestock_census">
+            <label ref="jr:itext('/data/livestock_census:label')"/>
+            <input ref="/data/livestock_census/cattle">
+                <label ref="jr:itext('/data/livestock_census/cattle:label')"/>
+            </input>
+            <input ref="/data/livestock_census/goats">
+                <label ref="jr:itext('/data/livestock_census/goats:label')"/>
+            </input>
+            <input ref="/data/livestock_census/sheep">
+                <label ref="jr:itext('/data/livestock_census/sheep:label')"/>
+            </input>
+            <input ref="/data/livestock_census/poultry">
+                <label ref="jr:itext('/data/livestock_census/poultry:label')"/>
+            </input>
+            <input ref="/data/livestock_census/piggery">
+                <label ref="jr:itext('/data/livestock_census/piggery:label')"/>
+            </input>
+            <input ref="/data/livestock_census/ox">
+                <label ref="jr:itext('/data/livestock_census/ox:label')"/>
+            </input>
+        </group>
+        <group ref="/data/mgnrega_information">
+            <label ref="jr:itext('/data/mgnrega_information:label')"/>
+            <input ref="/data/mgnrega_information/nrega_applied">
+                <label ref="jr:itext('/data/mgnrega_information/nrega_applied:label')"/>
+            </input>
+            <input ref="/data/mgnrega_information/nrega_job_card">
+                <label ref="jr:itext('/data/mgnrega_information/nrega_job_card:label')"/>
+            </input>
+            <input ref="/data/mgnrega_information/nrega_work_days">
+                <label ref="jr:itext('/data/mgnrega_information/nrega_work_days:label')"/>
+            </input>
+            <input ref="/data/mgnrega_information/generated_note_name_43">
+                <label ref="jr:itext('/data/mgnrega_information/generated_note_name_43:label')"/>
+            </input>
+            <select1 ref="/data/mgnrega_information/nrega_demands">
+                <label ref="jr:itext('/data/mgnrega_information/nrega_demands:label')"/>
+                <item>
+                    <label>Yes, and many demands were fulfilled</label>
+                    <value>demands_fulfilled</value>
+                </item>
+                <item>
+                    <label>Yes, but most demands were not met</label>
+                    <value>demands_not_met</value>
+                </item>
+                <item>
+                    <label>No, did not make demands</label>
+                    <value>no_demands</value>
+                </item>
+            </select1>
+            <select ref="/data/mgnrega_information/past_work_demands">
+                <label ref="jr:itext('/data/mgnrega_information/past_work_demands:label')"/>
+                <item>
+                    <label>Farm Pond</label>
+                    <value>farm_pond</value>
+                </item>
+                <item>
+                    <label>Canal</label>
+                    <value>canal</value>
+                </item>
+                <item>
+                    <label>Check Dam</label>
+                    <value>check_dam</value>
+                </item>
+                <item>
+                    <label>Percolation Tank</label>
+                    <value>percolation_tank</value>
+                </item>
+                <item>
+                    <label>Earthern Gully Plugs</label>
+                    <value>earthern_gully_plugs</value>
+                </item>
+                <item>
+                    <label>Tree Plantations</label>
+                    <value>tree_plantations</value>
+                </item>
+                <item>
+                    <label>Goat and Cow Shelters</label>
+                    <value>goat_cow_shelters</value>
+                </item>
+                <item>
+                    <label>Drainage/Soakage Channels</label>
+                    <value>drainage_soakage_channels</value>
+                </item>
+                <item>
+                    <label>Recharge Pits</label>
+                    <value>recharge_pits</value>
+                </item>
+                <item>
+                    <label>Soakage Pits</label>
+                    <value>soakage_pits</value>
+                </item>
+                <item>
+                    <label>Trench Cum Bund Network</label>
+                    <value>trench_cum_bund_network</value>
+                </item>
+                <item>
+                    <label>Large Water Bodies</label>
+                    <value>large_water_bodies</value>
+                </item>
+                <item>
+                    <label>Irrigation Channel</label>
+                    <value>irrigation_channel</value>
+                </item>
+                <item>
+                    <label>Continuous Contour Trenches (CCT)</label>
+                    <value>cct</value>
+                </item>
+                <item>
+                    <label>Water Absorption Trenches (WAT)</label>
+                    <value>wat</value>
+                </item>
+                <item>
+                    <label>Staggerd Contour Trenches (SCT)</label>
+                    <value>sct</value>
+                </item>
+                <item>
+                    <label>Rock Fill Dam</label>
+                    <value>rock_fill_dam</value>
+                </item>
+                <item>
+                    <label>Loose Boulder Structure</label>
+                    <value>loose_boulder_structure</value>
+                </item>
+                <item>
+                    <label>Stone Bunding</label>
+                    <value>stone_bunding</value>
+                </item>
+                <item>
+                    <label>Diversion Drains</label>
+                    <value>diversion_drains</value>
+                </item>
+                <item>
+                    <label>Contour Buns / Graded Bunds</label>
+                    <value>bunding</value>
+                </item>
+                <item>
+                    <label>Farm Bund</label>
+                    <value>farm_bund</value>
+                </item>
+                <item>
+                    <label>Well</label>
+                    <value>well</value>
+                </item>
+                <item>
+                    <label>5% Model</label>
+                    <value>five_perc_model</value>
+                </item>
+                <item>
+                    <label>30-40 Model</label>
+                    <value>thirty_forty_model</value>
+                </item>
+                <item>
+                    <label>Other</label>
+                    <value>other</value>
+                </item>
+            </select>
+            <input ref="/data/mgnrega_information/past_work_demands_other">
+                <label>Specify other.</label>
+            </input>
+            <select ref="/data/mgnrega_information/issues">
+                <label ref="jr:itext('/data/mgnrega_information/issues:label')"/>
+                <item>
+                    <label>Delayed reimbursements for the expenses</label>
+                    <value>delayed_reimbursements</value>
+                </item>
+                <item>
+                    <label>Finding labour for NREGA</label>
+                    <value>labour_nrega</value>
+                </item>
+                <item>
+                    <label>Demands for new work are not met</label>
+                    <value>new_works_demands</value>
+                </item>
+                <item>
+                    <label>Not aware of NREGA details and how to get work</label>
+                    <value>nrega_details</value>
+                </item>
+                <item>
+                    <label>Want work but do not get support to register demands</label>
+                    <value>support</value>
+                </item>
+                <item>
+                    <label>Mismatch in the online attendance due to lack of internet ot no smartphones</label>
+                    <value>mismatch</value>
+                </item>
+                <item>
+                    <label>Other</label>
+                    <value>other</value>
+                </item>
+            </select>
+            <input ref="/data/mgnrega_information/issues_other">
+                <label>Specify other.</label>
+            </input>
+            <select1 ref="/data/mgnrega_information/community_collaboration">
+                <label ref="jr:itext('/data/mgnrega_information/community_collaboration:label')"/>
+                <item>
+                    <label>Yes, almost all</label>
+                    <value>almost_all</value>
+                </item>
+                <item>
+                    <label>Some</label>
+                    <value>some</value>
+                </item>
+                <item>
+                    <label>Mostly None</label>
+                    <value>mostly_none</value>
+                </item>
+            </select1>
+        </group>
+        <input ref="/data/other_info">
+            <label ref="jr:itext('/data/other_info:label')"/>
+        </input>
+        <input ref="/data/generated_note_name_50">
+            <label ref="jr:itext('/data/generated_note_name_50:label')"/>
+        </input>
+        <input ref="/data/plan_id">
+            <label ref="jr:itext('/data/plan_id:label')"/>
+        </input>
+        <input ref="/data/plan_name">
+            <label ref="jr:itext('/data/plan_name:label')"/>
+        </input>
+    </h:body>
+</h:html>
