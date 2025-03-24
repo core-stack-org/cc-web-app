@@ -71,7 +71,7 @@ const LayersBottomSheet = () => {
         transform: 'translateX(16px)',
         color: '#fff',
         '& + .MuiSwitch-track': {
-          backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : '#65C466',
+          backgroundColor: '#000000',
           opacity: 1,
           border: 0,
         },
@@ -80,7 +80,7 @@ const LayersBottomSheet = () => {
         },
       },
       '&.Mui-focusVisible .MuiSwitch-thumb': {
-        color: '#33cf4d',
+        color: '#000000',
         border: '6px solid #fff',
       },
       '&.Mui-disabled .MuiSwitch-thumb': {
@@ -148,7 +148,7 @@ const LayersBottomSheet = () => {
             return (
               <div className={styles.layer_button} key={key}>
                 <FormControlLabel
-                  control={<PurpleSwitch sx={{ m: 1 }} onChange={() => handleLayerToggle(key)} checked={activeLayer.includes(key)} />}
+                  control={<IOSSwitch sx={{ m: 1 }} onChange={() => handleLayerToggle(key)} checked={activeLayer.includes(key)} />}
                   label={key}
                   labelPlacement="bottom"
                   classes={{ label: styles.layer_button_label }}
