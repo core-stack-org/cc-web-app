@@ -3,6 +3,7 @@ import styles from "./HamMenu.module.css";
 import useMainScreenModal from "../hooks/useMainModal";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
+import closeIcon from "../asset/close_icon.svg";
 import {
   faMapMarkedAlt,
   faLanguage,
@@ -81,25 +82,13 @@ const HamMenu = ({ screenTitle, screenIcon }) => {
 
         <div className={isopen ? styles.m_menu_visible : styles.m_menu}>
           <div className={styles.m_menu__header}>
-            <label
-              className={styles.m_menu__toggle}
+            <span>{"Commons Connect"}</span>
+            <button
+              className={styles.menu_close_button}
               onClick={() => setOpen(!isopen)}
             >
-              <svg
-                width="35"
-                height="35"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#000000"
-                strokeWidth="2"
-                strokeLinecap="butt"
-                strokeLinejoin="arcs"
-              >
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </label>
-            <span>{"Commons Connect"}</span>
+              <img src={closeIcon} width={25} height={25} className={styles.close_button} />
+            </button>
           </div>
           <div className={styles.menu_item_section}>
             <div className={styles.menu_top}>
@@ -134,7 +123,7 @@ const HamMenu = ({ screenTitle, screenIcon }) => {
                 <div className={styles.menu_item_start}>{t("Upload KML")}</div>
               </div>
             </div>
-           
+
           </div>
         </div>
       </div>

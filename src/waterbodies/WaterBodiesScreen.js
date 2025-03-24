@@ -15,7 +15,7 @@ import { Circle as CircleStyle } from "ol/style.js";
 import InfoWaterBodyModal from "../info/infoWaterBodyModal";
 import Loader from "../info/loader";
 import { Point } from "ol/geom";
-import PopUpSheet from "../info/NregaInfoBox.js";
+import PopUpSheet from "../info/AssetInfoBox.js";
 import TileLayer from "ol/layer/Tile";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
@@ -325,8 +325,8 @@ function WaterBodiesScreen({
       nregaLayer = getVectorLayer(
         "nrega_assets",
         localStorage.getItem("dist_name").toLowerCase() +
-          "_" +
-          localStorage.getItem("block_name").toLowerCase(),
+        "_" +
+        localStorage.getItem("block_name").toLowerCase(),
         true,
         true,
         null,
@@ -339,8 +339,8 @@ function WaterBodiesScreen({
     adminLayer = getVectorLayer(
       "panchayat_boundaries",
       localStorage.getItem("dist_name").toLowerCase() +
-        "_" +
-        localStorage.getItem("block_name").toLowerCase(),
+      "_" +
+      localStorage.getItem("block_name").toLowerCase(),
       true,
       false
     );
@@ -837,18 +837,18 @@ function WaterBodiesScreen({
         {(currentScreen === "add_hemlet" ||
           currentScreen === "show_hamlet_layer" ||
           currentScreen === "mapping_complete") && (
-          <div className={styles.footer_buttons_main_group}>
-            {isProposeMaintenanceActive && (
-              <Button
-                label={t("Provide Specifications")}
-                isDisabled={buttondisplay}
-                onClick={() => handleFeedbackButtonClick(currentlatlong)}
-              />
-            )}
+            <div className={styles.footer_buttons_main_group}>
+              {isProposeMaintenanceActive && (
+                <Button
+                  label={t("Provide Specifications")}
+                  isDisabled={buttondisplay}
+                  onClick={() => handleFeedbackButtonClick(currentlatlong)}
+                />
+              )}
 
-            <Button label={t("Finish")} onClick={handleFinishButton} />
-          </div>
-        )}
+              <Button label={t("Finish")} onClick={handleFinishButton} />
+            </div>
+          )}
       </div>
 
       {showBottomSheet && (

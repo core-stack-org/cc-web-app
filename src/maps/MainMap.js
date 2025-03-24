@@ -15,11 +15,12 @@ import {
   faCompass,
   faCrosshairs,
   faInfoCircle,
+  faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
 
 import InfoModal from "../info/infoModal";
 import { Point } from "ol/geom";
-import NregaInfoBox from "../info/NregaInfoBox.js";
+import NregaInfoBox from "../info/AssetInfoBox.js";
 import { Style } from "ol/style.js";
 import TileLayer from "ol/layer/Tile";
 import VectorLayer from "ol/layer/Vector";
@@ -44,12 +45,14 @@ import Loader from "../info/loader";
 import useMapLayers from "../hooks/useMapLayers.js";
 import usePlansStore from "../hooks/usePlans.js";
 import useOdkModal from "../hooks/useOdkModal.js";
+import useLayersModal from "../hooks/useLayersModal.js";
 
 import toast, { Toaster } from "react-hot-toast";
 import Modal from "../components/Modal.js";
 
 import planIds from "../default_plan.json";
 import MenuSimple from "../components/MenuSimple.js";
+import LayersBottomSheet from "../components/LayersBottomSheet.js";
 
 //? Icons Import For Resources
 import settlementIcon from "../asset/settlement_icon.svg";
@@ -98,20 +101,21 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
   const [planningState, setPlanningState] = useState(false);
 
   const LayerStore = useMapLayers((state) => state);
-  
+
   const { t } = useTranslation();
 
   const { currentPlan, setFocusTrigger, zoomLevel, mapCenter, setZoomLevel, setMapCenter } = usePlansStore((state) => {
     return {
       currentPlan: state.currentPlan,
       setFocusTrigger: state.setFocusTrigger,
-      zoomLevel : state.zoomLevel,
-      mapCenter : state.mapCenter,
-      setZoomLevel : state.setZoomLevel,
-      setMapCenter : state.setMapCenter
+      zoomLevel: state.zoomLevel,
+      mapCenter: state.mapCenter,
+      setZoomLevel: state.setZoomLevel,
+      setMapCenter: state.setMapCenter
     };
   });
 
+  const onOpenLayers = useLayersModal((state) => state.onOpen);
 
   const updateSettlementName = useOdkModal(
     (state) => state.updateSettlementName
@@ -190,10 +194,10 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
   }
 
   const [nregaStyle, setNregaStyle] = useState({
-    filter :['in', ['get','workYear'], [2016,2017,2018]], 
-    'shape-points':10,
+    filter: ['in', ['get', 'workYear'], [2016, 2017, 2018]],
+    'shape-points': 10,
     'shape-radius': 13,
-    'shape-fill-color' : [
+    'shape-fill-color': [
       'match',
       ['get', 'itemColor'],
       4,
@@ -330,8 +334,8 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
   //Grabbing info from the URL
   const queryParameters = new URLSearchParams(window.location.search);
   localStorage.setItem("app_name", queryParameters.get("app_name"));
-  localStorage.setItem("dist_name", queryParameters.get("dist_name").replace(/ /g,"_"));
-  localStorage.setItem("block_name", queryParameters.get("block_name").replace(/ /g,"_"));
+  localStorage.setItem("dist_name", queryParameters.get("dist_name").replace(/ /g, "_"));
+  localStorage.setItem("block_name", queryParameters.get("block_name").replace(/ /g, "_"));
   localStorage.setItem(
     "plan_id",
     planIds[queryParameters.get("block_name").toLowerCase()]
@@ -381,18 +385,18 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       visible: true,
     });
 
-      NregaLayer = getVectorLayer(
-        "nrega_assets",
-        localStorage.getItem("dist_name").toLowerCase() +
-          "_" +
-          localStorage.getItem("block_name").toLowerCase(),
-        true,
-        true,
-        null,
-        null,
-        null,
-        setNregaYears
-      );
+    NregaLayer = getVectorLayer(
+      "nrega_assets",
+      localStorage.getItem("dist_name").toLowerCase() +
+      "_" +
+      localStorage.getItem("block_name").toLowerCase(),
+      true,
+      true,
+      null,
+      null,
+      null,
+      setNregaYears
+    );
 
     AdminLayer = getVectorLayer(
       "panchayat_boundaries",
@@ -497,13 +501,13 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     const Vectorsource = AdminLayer.getSource();
     Vectorsource.once("change", function (e) {
       if (Vectorsource.getState() === "ready") {
-        if(mapCenter === null){
+        if (mapCenter === null) {
           const arr = Vectorsource.getExtent();
           const mapcenter = [(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2];
           initialMap.getView().setZoom(13);
           initialMap.getView().setCenter(mapcenter);
         }
-        else{
+        else {
           initialMap.getView().setZoom(zoomLevel);
           initialMap.getView().setCenter(mapCenter);
         }
@@ -535,7 +539,6 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     });
 
     geolocation.setTracking(true);
-    
 
     new VectorLayer({
       map: initialMap,
@@ -543,7 +546,32 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
         features: [accuracyFeature, positionFeature],
       }),
     });
-    //}
+
+    if (adminLayerRef.current) {
+      LayerStore.addLayersState("Admin Boundary", adminLayerRef, LayerStore.Layers);
+    }
+
+    if (nregaLayerRef.current) {
+      LayerStore.addLayersState("NREGA Assets", nregaLayerRef, LayerStore.Layers);
+    }
+
+    if (SettlementLayerRef.current) {
+      LayerStore.addLayersState("Settlement Layer", SettlementLayerRef, LayerStore.Layers);
+    }
+
+    if (WellLayerRef.current) {
+      LayerStore.addLayersState("Well Layer", WellLayerRef, LayerStore.Layers);
+    }
+
+    if (WaterStructureLayerRef.current) {
+      LayerStore.addLayersState("Water Structure Layer", WaterStructureLayerRef, LayerStore.Layers);
+    }
+
+    // Update the layers presence status if at least one layer is registered
+    if (Object.keys(LayerStore.Layers).length > 0) {
+      LayerStore.updateStatus(true);
+    }
+
     setIsLoading(false);
 
     return () => {
@@ -551,14 +579,12 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     };
   }, []);
 
-
-  //? For Fetching the layers which are dependent on the Selected Plan
   useEffect(() => {
-    if(currentPlan !== null){
+    if (currentPlan !== null) {
 
-      if(SettlementLayerRef.current !== null){mapRef.current.removeLayer(SettlementLayerRef.current)}
-      if(WellLayerRef.current !== null){mapRef.current.removeLayer(WellLayerRef.current)}
-      if(WaterStructureLayerRef.current !== null){mapRef.current.removeLayer(WaterStructureLayerRef.current)}
+      if (SettlementLayerRef.current !== null) { mapRef.current.removeLayer(SettlementLayerRef.current) }
+      if (WellLayerRef.current !== null) { mapRef.current.removeLayer(WellLayerRef.current) }
+      if (WaterStructureLayerRef.current !== null) { mapRef.current.removeLayer(WaterStructureLayerRef.current) }
 
       LayerStore.updateCurrPlan(currentPlan)
 
@@ -595,7 +621,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
       SettlementLayer.setStyle(
         new Style({
-          image: new Icon({ src: settlementIcon, scale : 0.4}),
+          image: new Icon({ src: settlementIcon, scale: 0.4 }),
         })
       );
 
@@ -676,18 +702,18 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
           setShowBottomSheet(true);
         }
 
-        mapRef.current.forEachFeatureAtPixel(e.pixel, (feature, layer)=>{
-          if(layer === SettlementLayer){
+        mapRef.current.forEachFeatureAtPixel(e.pixel, (feature, layer) => {
+          if (layer === SettlementLayer) {
             setSelectedFeatures(feature.values_)
             setInfoBoxType("settlement")
             setShowBottomSheet(true);
           }
-          else if(layer === WellLayer){
+          else if (layer === WellLayer) {
             setSelectedFeatures(feature.values_)
             setInfoBoxType("well")
             setShowBottomSheet(true);
           }
-          else if(layer === WaterStructureLayer){
+          else if (layer === WaterStructureLayer) {
             setSelectedFeatures(feature.values_)
             setInfoBoxType("waterStructure")
             setShowBottomSheet(true);
@@ -695,7 +721,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
         })
       });
     }
-  },[currentPlan])
+  }, [currentPlan])
 
   useEffect(() => {
     if (gpsLocation != null) {
@@ -769,7 +795,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
   };
 
   // Colour-coding NREGA works based on Work Category
-  const handleWorksToggle = async(item) => {
+  const handleWorksToggle = async (item) => {
     let checked = nregaWorks.includes(item);
     let temp_works
     if (!checked) {
@@ -781,24 +807,24 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       setNregaWorks(temp_works);
     }
 
-    let styleFillColor = ['match',['get', 'itemColor']]
+    let styleFillColor = ['match', ['get', 'itemColor']]
 
-    temp_works.map((temp_item) =>{
+    temp_works.map((temp_item) => {
       styleFillColor.push(workToNumMapping[temp_item]);
       styleFillColor.push(workToColorMapping[temp_item]);
     })
 
     styleFillColor.push('#00000000')
 
-    if(temp_works.length === 0){
+    if (temp_works.length === 0) {
       styleFillColor = '#00000000'
     }
 
     let tempNregaStyle = {
-      filter : nregaStyle.filter, 
+      filter: nregaStyle.filter,
       'shape-points': nregaStyle['shape-points'],
       'shape-radius': nregaStyle['shape-radius'],
-      'shape-fill-color' : styleFillColor
+      'shape-fill-color': styleFillColor
     }
 
 
@@ -808,7 +834,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     mapRef.current.removeLayer(nregaLayerRef.current);
 
     let nregaWebGlLayer = new WebGLPointsLayer({
-      source : nregaVectorSource,
+      source: nregaVectorSource,
       style: tempNregaStyle,
     })
 
@@ -817,7 +843,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     mapRef.current.addLayer(nregaWebGlLayer)
   };
 
-  const handleNregaYearToggle = async(temp_year) => {
+  const handleNregaYearToggle = async (temp_year) => {
     let temp_active_years = []
     if (activeYears.includes(temp_year)) {
       temp_active_years = activeYears.filter((year) => year != temp_year);
@@ -828,13 +854,13 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       setActiveYears(temp_active_years);
     }
 
-    let tempFilter = ['in', ['get','workYear'], temp_active_years]
+    let tempFilter = ['in', ['get', 'workYear'], temp_active_years]
 
     let tempNregaStyle = {
-      filter : tempFilter, 
+      filter: tempFilter,
       'shape-points': nregaStyle['shape-points'],
       'shape-radius': nregaStyle['shape-radius'],
-      'shape-fill-color' : nregaStyle['shape-fill-color']
+      'shape-fill-color': nregaStyle['shape-fill-color']
     }
 
 
@@ -844,7 +870,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     mapRef.current.removeLayer(nregaLayerRef.current);
 
     let nregaWebGlLayer = new WebGLPointsLayer({
-      source : nregaVectorSource,
+      source: nregaVectorSource,
       style: tempNregaStyle,
     })
 
@@ -863,7 +889,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       setFocusTrigger(true);
     }
   };
- 
+
   return (
     <>
       <Toaster />
@@ -895,6 +921,13 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
             />
           </div>
           <div className={styles.header_secondary_button}>
+            <Button
+              onClick={onOpenLayers}
+              isIcon={true}
+              icon={faLayerGroup}
+            />
+          </div>
+          <div className={styles.header_secondary_button}>
             {!isInBlock && (
               <Button
                 onClick={zoomToBlockExtents}
@@ -905,6 +938,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
           </div>
         </div>
         <InfoModal isOpen={showInfoModal} onClose={handleInfoClose} />
+        <LayersBottomSheet />
 
         {isLoading && <Loader isOpen={isLoading} />}
 
@@ -912,10 +946,10 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
           <div className={styles.footer_planning}>
             {planningState && (
               <div className={styles.footer_planning_menu}>
-                <Button onClick={handleGroundWaterButtonClick}label={t("GroundWater")}/>
-                <Button onClick={handleWaterBodiesButtonClick} label={t("Surface WaterBodies")}/>
+                <Button onClick={handleGroundWaterButtonClick} label={t("GroundWater")} />
+                <Button onClick={handleWaterBodiesButtonClick} label={t("Surface WaterBodies")} />
                 <Button onClick={handleAgriButtonClick} label={t("Agri")} />
-                <Button onClick={handleLivelihoodButtonClick} label={t("Livelihood")}/>
+                <Button onClick={handleLivelihoodButtonClick} label={t("Livelihood")} />
                 {/* <Button onClick={handleForestButtonClick} label={"Forest"} /> */}
               </div>
             )}
@@ -943,19 +977,18 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
                       <button
                         key={idx}
                         style={{
-                          backgroundColor: `${
-                            nregaWorks.includes(item)
-                              ? `rgba(${color[0].join(",")})`
-                              : ""
-                          }`,
-                          border : 'none',
-                          color : 'black',
-                          padding : '10px 20px',
-                          textAlign : 'center',
-                          textDecoration : 'none',
-                          display : 'inline-block',
-                          margin : '4px 2px',
-                          borderRadius : '16px'
+                          backgroundColor: `${nregaWorks.includes(item)
+                            ? `rgba(${color[0].join(",")})`
+                            : ""
+                            }`,
+                          border: 'none',
+                          color: 'black',
+                          padding: '10px 20px',
+                          textAlign: 'center',
+                          textDecoration: 'none',
+                          display: 'inline-block',
+                          margin: '4px 2px',
+                          borderRadius: '16px'
                         }}
                         onClick={() => handleWorksToggle(item)}
                       >
@@ -987,7 +1020,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
               </div>
 
               <div></div>
-            </> 
+            </>
           }
           title={t("Layers")}
         />
