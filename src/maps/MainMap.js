@@ -96,7 +96,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
   const [infoBoxType, setInfoBoxType] = useState(null);
 
-  const [activeYears, setActiveYears] = useState([2016, 2017, 2018]);
+  const [activeYears, setActiveYears] = useState([2021, 2022]);
 
   const [planningState, setPlanningState] = useState(false);
 
