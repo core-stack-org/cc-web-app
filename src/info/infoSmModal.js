@@ -9,13 +9,32 @@ const InfoSmModal = ({ isOpen, onClose }) => {
     return (
         <div style={infoModalStyle}>
             <div style={infoModalContentStyle}>
-                <h2>{t("Resource Mapping")}</h2>
-                <p>{t("info_social_1")}</p>
-
-                <div style={closeButtonContainerStyle}>
-                    <button onClick={onClose} style={closeButtonStyle}>Close</button>
+                <div className="modal-header">
+                    <h2 style={{ margin: '0 0 20px 0', color: '#333', fontSize: '1.5rem' }}>
+                        {t("Resource Mapping")}
+                    </h2>
                 </div>
 
+                <div style={contentSectionStyle}>
+                    <p style={paragraphStyle}>{t("info_social_1")}</p>
+                </div>
+
+                <div style={closeButtonContainerStyle}>
+                    <button
+                        onClick={onClose}
+                        style={closeButtonStyle}
+                        onMouseOver={(e) => {
+                            e.target.style.backgroundColor = '#f3f4f6';
+                            e.target.style.borderColor = '#1F2937';
+                        }}
+                        onMouseOut={(e) => {
+                            e.target.style.backgroundColor = 'white';
+                            e.target.style.borderColor = '#374151';
+                        }}
+                    >
+                        Close
+                    </button>
+                </div>
             </div>
         </div>
     );
@@ -26,42 +45,58 @@ export default InfoSmModal;
 
 
 const infoModalStyle = {
-    position: 'absolute',
+    position: 'fixed',
     top: '0',
     left: '0',
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     backdropFilter: 'blur(5px)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: '1000',
-  };
+    animation: 'fadeIn 0.3s ease-out',
+};
 
 const infoModalContentStyle = {
     width: '300px',
-    padding: '20px',
+    maxWidth: '80%',
+    maxHeight: '85vh',
+    padding: '24px',
     backgroundColor: '#fff',
-    borderRadius: '10px',
+    borderRadius: '12px',
+    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
     textAlign: 'left',
+    overflow: 'auto',
+    position: 'relative',
+};
+
+const contentSectionStyle = {
+    animation: 'fadeIn 0.3s ease-out',
+    marginBottom: '20px',
+};
+
+const paragraphStyle = {
+    fontSize: '15px',
+    lineHeight: '1.6',
+    color: '#4B5563',
+    margin: '0 0 12px 0',
 };
 
 const closeButtonContainerStyle = {
     textAlign: 'center',
-    marginTop: '10px'
+    marginTop: '16px',
 };
 
 const closeButtonStyle = {
     backgroundColor: 'white',
-    border: '2px solid #333',
-    borderRadius: '5px',
-    color: '#333',
-    padding: '5px 10px',
+    border: '1px solid #374151',
+    borderRadius: '6px',
+    color: '#111827',
+    padding: '8px 16px',
     cursor: 'pointer',
-    marginTop: '10px',
-    transition: '0.3s all',
-    '&:hover': {
-        backgroundColor: '#f7f7f7',
-    }
+    fontSize: '14px',
+    fontWeight: '500',
+    transition: 'all 0.2s ease',
 };
