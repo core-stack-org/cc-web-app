@@ -20,7 +20,7 @@ import {
 
 import InfoModal from "../info/infoModal";
 import { Point } from "ol/geom";
-import NregaInfoBox from "../info/NregaInfoBox.js";
+import NregaInfoBox from "../info/AssetInfoBox.js";
 import { Style } from "ol/style.js";
 import TileLayer from "ol/layer/Tile";
 import VectorLayer from "ol/layer/Vector";
