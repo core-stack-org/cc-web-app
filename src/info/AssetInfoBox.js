@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../components/Modal";
 
-function NregaInfoBox({ features, isOpen, onClose, infoType }) {
+function AssetInfoBox({ features, isOpen, onClose, infoType }) {
 
   const [ModalBody, setModalBody] = useState(<></>)
 
@@ -251,4 +251,4 @@ function NregaInfoBox({ features, isOpen, onClose, infoType }) {
   );
 }
 
-export default NregaInfoBox;
+export default AssetInfoBox;

@@ -20,7 +20,7 @@ import {
 
 import InfoModal from "../info/infoModal";
 import { Point } from "ol/geom";
-import NregaInfoBox from "../info/AssetInfoBox.js";
+import AssetInfoBox from "../info/AssetInfoBox.js";
 import { Style } from "ol/style.js";
 import TileLayer from "ol/layer/Tile";
 import VectorLayer from "ol/layer/Vector";
@@ -56,16 +56,10 @@ import LayersBottomSheet from "../components/LayersBottomSheet.js";
 
 //? Icons Import For Resources
 import settlementIcon from "../asset/settlement_icon.svg";
-import well_mrker from "../asset/well_proposed.svg";
-import well_mrker_accepted from "../asset/well_accepted.svg";
-import well_mrker_rejected from "../asset/well_rejected.svg";
 
-import wb_mrker from "../asset/waterbodies_proposed.svg";
-import boulder_proposed from "../asset/boulder_proposed.svg";
-import farm_pond_proposed from "../asset/farm_pond_proposed.svg";
-import tcb_proposed from "../asset/tcb_proposed.svg";
-import canals_proposed from "../asset/canal_proposed.svg";
-import checkDam_proposed from "../asset/check_dam_proposed.svg";
+import LargeWaterBody from "../asset/waterbodiesScreenIcon.svg";
+import iconsDetails from "../helper/icons.json";
+
 import useNregaYears from "../hooks/useNregaYears.js";
 
 import { useTranslation } from 'react-i18next';
@@ -627,55 +621,29 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
       WellLayer.setStyle(function (feature) {
         const status = feature.values_;
-        if (status.status_re == "approved") {
-          return new Style({
-            image: new Icon({ src: well_mrker_accepted }),
-          });
-        } else if (status.status_re == "rejected") {
-          return new Style({
-            image: new Icon({ src: well_mrker_rejected }),
-          });
-        } else {
-          return new Style({
-            image: new Icon({ src: well_mrker }),
-          });
+        if(status.status_re in iconsDetails.socialMapping_icons.well){
+            return new Style({
+                image: new Icon({ src: iconsDetails.socialMapping_icons.well[status.status_re] }),
+            })
+        }
+        else{
+            return new Style({
+                image: new Icon({ src: iconsDetails.socialMapping_icons.well["proposed"] }),
+            })
         }
       });
 
       WaterStructureLayer.setStyle(function (feature) {
         const status = feature.values_;
-        if (status.type_wbs == "Large water body") {
-          return new Style({
-            image: new Icon({ src: wb_mrker }),
-          });
-        } else if (status.type_wbs == "Farm pond") {
-          return new Style({
-            image: new Icon({ src: farm_pond_proposed }),
-          });
-        } else if (status.type_wbs == "Check dam") {
-          return new Style({
-            image: new Icon({ src: checkDam_proposed }),
-          });
-        } else if (status.type_wbs == "Loose boulder structure") {
-          return new Style({
-            image: new Icon({ src: boulder_proposed }),
-          });
-        } else if (status.type_wbs == "Trench cum bund network") {
-          return new Style({
-            image: new Icon({ src: tcb_proposed }),
-          });
-        } else if (status.type_wbs == "Canal") {
-          return new Style({
-            image: new Icon({ src: canals_proposed }),
-          });
-        } else if (status.type_wbs == "Irrigation channel") {
-          return new Style({
-            image: new Icon({ src: wb_mrker }),
-          });
-        } else {
-          return new Style({
-            image: new Icon({ src: wb_mrker }),
-          });
+        if(status.wbs_type in iconsDetails.WB_Icons){
+            return new Style({
+                image: new Icon({ src: iconsDetails.WB_Icons[status.wbs_type] }),
+            })
+        }
+        else{
+            return new Style({
+                image: new Icon({ src: LargeWaterBody }),
+            })
         }
       });
 
@@ -1032,7 +1000,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
           title={t("Layers")}
         />
 
-        <NregaInfoBox
+        <AssetInfoBox
           features={selectedFeatures}
           isOpen={showBottomSheet}
           onClose={() => {
