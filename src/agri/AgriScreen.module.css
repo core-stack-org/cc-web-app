@@ -6,19 +6,22 @@
 
 .map {
   width: 100vw;
-  height: 100vh; 
+  height: 100vh;
 }
 
 .slider_container {
   display: flex;
   z-index: 2;
-  justify-content: center; /* Centers horizontally */
-  align-items: center;     /* Centers vertically */
+  justify-content: center;
+  /* Centers horizontally */
+  align-items: center;
+  /* Centers vertically */
   position: absolute;
   top: 0%;
-  left: 0%;               /* 50% from the left */
+  left: 0%;
+  /* 50% from the left */
   margin-top: 17em;
-  left: 22em; 
+  left: 22em;
   transform: translate(-50%, -50%);
 }
 
@@ -47,10 +50,10 @@
 
 
 .footer_buttons {
-  all: unset; 
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   /* Centering the container in the viewport */
   position: absolute;
@@ -63,7 +66,7 @@
   z-index: 1;
 }
 
-.footer_buttons_main{
+.footer_buttons_main {
   position: absolute;
   bottom: 0;
   width: 100vw;
@@ -77,11 +80,11 @@
   outline: 2px solid #3ed489;
 }
 
-.header_buttons{
+.header_buttons {
   display: flex;
   align-items: center;
   position: absolute;
-  margin-left: 5em;   
+  margin-left: 6em;
   width: 80vw;
   top: 0%;
   margin-top: 8em;
@@ -99,24 +102,24 @@
   font-size: 11px;
 }
 
-.header_secondary_buttons{
+.header_secondary_buttons {
   display: flex;
   flex-direction: column;
   align-items: center;
   position: absolute;
   top: 0%;
-  margin-top: 12em;
-  margin-left: 0.5em;   
+  margin-top: 8.2em;
+  margin-left: 0.5em;
   background-color: transparent;
 }
 
-.header_secondary_button{
+.header_secondary_button {
   margin-bottom: 1em;
 }
 
 .active_button {
-  background-color: #258dfc; 
-  color: white; 
+  background-color: #258dfc;
+  color: white;
 }
 
 .inactive_button {

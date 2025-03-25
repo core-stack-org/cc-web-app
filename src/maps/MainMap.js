@@ -96,7 +96,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
   const [infoBoxType, setInfoBoxType] = useState(null);
 
-  const [activeYears, setActiveYears] = useState([2016, 2017, 2018]);
+  const [activeYears, setActiveYears] = useState([2021, 2022]);
 
   const [planningState, setPlanningState] = useState(false);
 
@@ -369,7 +369,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     setIsLoading(false);
   }, []);
 
-  //Fetching the layers
+  // MARK: - Fetching the layers
   useEffect(() => {
     let BaseLayer = null;
     let NregaLayer = null;
@@ -594,7 +594,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
       SettlementLayer = getVectorLayer(
         "resources",
-        "hemlet_layer" + localStorage.getItem("block_name").toLowerCase(),
+        "settlement_" + currentPlan.plan_id + "_" + localStorage.getItem("dist_name").toLowerCase() + "_" + localStorage.getItem("block_name").toLowerCase(),
         true,
         true,
         "settlement",
@@ -686,6 +686,13 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       SettlementLayerRef.current = SettlementLayer
       WellLayerRef.current = WellLayer
       WaterStructureLayerRef.current = WaterStructureLayer
+
+      LayerStore.addLayersState("Settlement Layer", SettlementLayerRef, LayerStore.Layers);
+      LayerStore.addLayersState("Well Layer", WellLayerRef, LayerStore.Layers);
+      LayerStore.addLayersState("Water Structure Layer", WaterStructureLayerRef, LayerStore.Layers);
+
+      // Force a UI refresh to update the toggle states
+      LayerStore.updateStatus(true);
 
       mapRef.current.on("click", (e) => {
         setInfoBoxType(null)

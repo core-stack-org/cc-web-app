@@ -22,26 +22,26 @@ const colorMapping = {
 };
 
 const createTextStyle = (feature, resolution) => {
-  try{
+  try {
     return new Text({
       textAlign: 'center',
       textBaseline: 'middle',
-      scale : 1.4,
+      scale: 1.4,
       text: feature.values_.Panchaya_1.charAt(0).toUpperCase() + feature.values_.Panchaya_1.slice(1),
-      fill: new Fill({color: '#ffffff'}),
-      stroke: new Stroke({color: '#000000', width: 2}),
+      fill: new Fill({ color: '#ffffff' }),
+      stroke: new Stroke({ color: '#000000', width: 2 }),
       offsetX: 0,
       offsetY: 0,
       overflow: true,
     });
-  } catch(e){
+  } catch (e) {
     return new Text({
       textAlign: 'center',
       textBaseline: 'middle',
-      scale : 1.4,
+      scale: 1.4,
       text: feature.values_.vill_name.charAt(0).toUpperCase() + feature.values_.vill_name.slice(1),
-      fill: new Fill({color: '#ffffff'}),
-      stroke: new Stroke({color: '#000000', width: 2}),
+      fill: new Fill({ color: '#ffffff' }),
+      stroke: new Stroke({ color: '#000000', width: 2 }),
       offsetX: 0,
       offsetY: 0,
       overflow: true,
@@ -98,7 +98,6 @@ function getNewUrl(store_name, resource_type, plan_id) {
   return geojson_url;
 }
 
-// with error handling
 let errorReported = false;
 function getVectorLayer(layer_store, layer_name, setVisible = true, setActive = true, resource_type = null, plan_id = null, temp_layer, setNregaYears) {
   let url

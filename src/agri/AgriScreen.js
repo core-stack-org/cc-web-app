@@ -4,7 +4,7 @@ import styles from "./AgriScreen.module.css";
 import * as extent from "ol/extent";
 import * as proj from "ol/proj";
 
-import { Fill, Icon, Stroke, Style } from "ol/style.js";
+import { Fill, Icon, Stroke, Style, Circle as CircleStyle } from "ol/style.js";
 import { Feature, Map, View, Geolocation } from "ol";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -13,7 +13,6 @@ import { getImageLayer, getVectorLayer } from "../helper/utils";
 import toast, { Toaster } from "react-hot-toast";
 
 import Box from "@mui/material/Box";
-import { Circle as CircleStyle } from "ol/style.js";
 import InfoAgriModal from "../info/infoAgriModal";
 import Loader from "../info/loader";
 import { Point } from "ol/geom";
@@ -63,7 +62,7 @@ const selectedStyle = new Style({
 const blankStyle = new Style({
   stroke: new Stroke({
     color: "#e4c1f9",
-    width: 1,
+    width: 3,
   }),
   fill: new Fill({
     color: "rgba(255, 255, 255, 0)",
@@ -262,7 +261,7 @@ function AgriScreen({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
   const handleAnalyzeButtonClick = () => {
     const values = featuresRef.current.droughtFeature.values_;
-    
+
     if (featuresRef.current.droughtFeature) {
       // Store drought data
       sessionStorage.setItem(
@@ -542,13 +541,12 @@ function AgriScreen({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     setShowInfoAgriModal(false);
   };
 
-  const lulcLink = (start, end, blk) =>{
-    if(blk === "lakshmipur"){
+  const lulcLink = (start, end, blk) => {
+    if (blk === "lakshmipur") {
       return `https://geoserver.core-stack.org:8443/geoserver/LULC_level_3/wms?service=WMS&version=1.1.0&request=GetMap&layers=LULC_level_3%3ALULC_${start}_${end}_${localStorage.getItem("dist_name").toLowerCase()}_${blk}_level_3&width=768&height=387&srs=EPSG%3A4326&styles=&format=application/openlayers.com/geoserver/wms`
     }
-    else 
-    {return`https://geoserver.core-stack.org:8443/geoserver/LULC_level_3/wms?service=WMS&version=1.1.0&request=GetMap&layers=LULC_level_3%3ALULC_${start}_${end}_${blk}_level_3&width=768&height=387&srs=EPSG%3A4326&styles=&format=application/openlayers.com/geoserver/wms`;}
-    }
+    else { return `https://geoserver.core-stack.org:8443/geoserver/LULC_level_3/wms?service=WMS&version=1.1.0&request=GetMap&layers=LULC_level_3%3ALULC_${start}_${end}_${blk}_level_3&width=768&height=387&srs=EPSG%3A4326&styles=&format=application/openlayers.com/geoserver/wms`; }
+  }
 
   const drainageColors = [
     "03045E",
@@ -637,8 +635,8 @@ function AgriScreen({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     const adminLayer = getVectorLayer(
       "panchayat_boundaries",
       localStorage.getItem("dist_name").toLowerCase() +
-        "_" +
-        localStorage.getItem("block_name").toLowerCase()
+      "_" +
+      localStorage.getItem("block_name").toLowerCase()
     );
     adminLayer.setVisible(true);
 
@@ -729,9 +727,9 @@ function AgriScreen({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       droughtLayer = getVectorLayer(
         "cropping_drought",
         localStorage.getItem("dist_name").toLowerCase() +
-          "_" +
-          localStorage.getItem("block_name").toLowerCase() +
-          "_drought",
+        "_" +
+        localStorage.getItem("block_name").toLowerCase() +
+        "_drought",
         false,
         true
       );
@@ -1317,9 +1315,8 @@ function AgriScreen({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
           <div className={styles.footer_buttons}>
             {isProposeIrrigationActive && (
               <button
-                className={`${styles.footer_button} ${
-                  !showProposeButton ? "transient-button" : ""
-                }`}
+                className={`${styles.footer_button} ${!showProposeButton ? "transient-button" : ""
+                  }`}
                 onClick={() => handleFeedbackButtonClick(currentlatlong)}
                 disabled={showProposeButton}
               >
@@ -1340,9 +1337,8 @@ function AgriScreen({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
           <div className={styles.footer_buttons}>
             {isProposeIrrigationActive && (
               <button
-                className={`${styles.footer_button} ${
-                  !isTransientState ? "transient-button" : ""
-                }`}
+                className={`${styles.footer_button} ${!isTransientState ? "transient-button" : ""
+                  }`}
                 onClick={() => handleFeedbackButtonClick(currentlatlong)}
                 disabled={!isTransientState}
               >

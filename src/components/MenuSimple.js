@@ -8,15 +8,15 @@ import { styled } from '@mui/system';
 import usePlansStore from "../hooks/usePlans.js";
 import { createTheme } from '@mui/material';
 
-export default function MenuSimple({isDisabled = false}) {
+export default function MenuSimple({ isDisabled = false }) {
 
   const { plans, currentPlan, focusTrigger, setCurrentPlan, setFocusTrigger } = usePlansStore((state) => {
-    return { plans: state.plans, currentPlan: state.currentPlan, focusTrigger : state.focusTrigger, setCurrentPlan: state.setCurrentPlan, setFocusTrigger : state.setFocusTrigger };
+    return { plans: state.plans, currentPlan: state.currentPlan, focusTrigger: state.focusTrigger, setCurrentPlan: state.setCurrentPlan, setFocusTrigger: state.setFocusTrigger };
   });
 
   const default_Work = {
-      "plan" : `Default Plan ${localStorage.getItem('block_name')}`,
-      "plan_id" : localStorage.getItem("plan_id"),
+    "plan": `Default Plan ${localStorage.getItem('block_name')}`,
+    "plan_id": localStorage.getItem("plan_id"),
   }
 
   const handlePlanSelect = (plan) => {
@@ -26,8 +26,8 @@ export default function MenuSimple({isDisabled = false}) {
   };
 
   const theme = createTheme({
-    palette : {
-      mode : focusTrigger ? 'dark' : 'light',
+    palette: {
+      mode: focusTrigger ? 'dark' : 'light',
     },
   })
 
@@ -37,13 +37,13 @@ export default function MenuSimple({isDisabled = false}) {
       {!isDisabled && <Menu slots={{ listbox: Listbox }}>
 
         {plans !== null ? (
-            plans.map((item) => {
-                    return (
-                    <MenuItem onClick={handlePlanSelect(item)} key={item.plan_id}>{item.plan}</MenuItem>
-                    )
-            })
+          plans.map((item) => {
+            return (
+              <MenuItem onClick={handlePlanSelect(item)} key={item.plan_id}>{item.plan}</MenuItem>
+            )
+          })
         ) : (
-            <MenuItem onClick={handlePlanSelect(default_Work)}>{default_Work.plan}</MenuItem>
+          <MenuItem onClick={handlePlanSelect(default_Work)}>{default_Work.plan}</MenuItem>
         )}
 
       </Menu>}

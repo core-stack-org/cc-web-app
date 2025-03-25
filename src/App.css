@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Mukta&display=swap');
-*{
+
+* {
   font-family: 'Mukta', sans-serif;
 }
 
@@ -13,13 +14,14 @@
 }
 
 .center {
-  
+
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
   width: 100%;
 }
-.login-center{
+
+.login-center {
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
@@ -28,21 +30,22 @@
   height: 350px;
   width: 16%;
 }
+
 .Login-div {
-  flex:10%;
+  flex: 10%;
 }
 
 .row {
   display: flex;
 }
-  
+
 .column {
   flex: 50%;
 }
 
 .App-header {
-  
-  flex: 50%;   
+
+  flex: 50%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -60,6 +63,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -134,8 +138,9 @@ input[type="submit"]:hover {
 tr {
   text-align: center;
 }
+
 .center-dev {
-  
+
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
@@ -179,6 +184,7 @@ html {
   /* color of the track before the thumb */
   background: var(--main-color);
 }
+
 .customSlider-thumb {
   cursor: pointer;
   /*color for the thumb */
@@ -205,7 +211,7 @@ html {
 }
 
 
-.smart-app-banner{
+.smart-app-banner {
   z-index: 10001;
   outline: none;
   background-color: rgb(207, 27, 27);
@@ -219,13 +225,13 @@ html {
   height: 5vh;
 }
 
-.banner-main{
+.banner-main {
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.banner-meta{
+.banner-meta {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -233,7 +239,7 @@ html {
   margin-top: 1em;
 }
 
-.close{
+.close {
   position: fixed;
   left: 2%;
   top: 1%;
@@ -243,19 +249,18 @@ html {
   border: 0;
 }
 
-.banner-name{
+.banner-name {
   font-weight: 700;
   font-size: 1.4em;
 }
 
-.banner-body{
+.banner-body {
   font-size: 1em;
   font-weight: 600;
 }
 
 .ol-zoom {
-  top: 6.5em !important;
-  left: 1.7em !important;
+  display: none !important;
 }
 
 /* .bottom-bar-banner{
@@ -336,6 +341,6 @@ html {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
-.location-selector-modal{
+.location-selector-modal {
   z-index: 1001;
 }
