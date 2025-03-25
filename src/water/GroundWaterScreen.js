@@ -30,13 +30,9 @@ import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 import mapMarker from "../asset/map_marker.svg";
+import LargeWaterBody from "../asset/waterbodiesScreenIcon.svg";
 
-import tcb_proposed from "../asset/tcb_proposed.svg"
-import boulder_proposed from "../asset/boulder_proposed.svg"
-import farm_pond_proposed from "../asset/farm_pond_proposed.svg"
-import check_dam_proposed from "../asset/check_dam_proposed.svg"
-import wb_mrker_proposed from "../asset/waterbodies_proposed.svg";
-import wb_mrker from "../asset/waterbodiesScreenIcon.svg"
+import iconsDetails from "../helper/icons.json";
 
 import settlementIcon from "../asset/settlement_icon.svg";
 import Button from "../components/Button";
@@ -49,6 +45,7 @@ import Assetform from "../assetform/assetform.js";
 import useMapLayers from "../hooks/useMapLayers.js";
 import useLayersModal from "../hooks/useLayersModal.js";
 import usePlansStore from "../hooks/usePlans.js";
+import useMainScreenModal from "../hooks/useMainModal.js";
 
 import groundwaterScreenIcon from "../asset/groundwaterScreenIcon.svg";
 import MenuSimple from "../components/MenuSimple.js";
@@ -131,6 +128,11 @@ function GroundWaterScreen({
     const isLayerUpdated = useOdkModal((state) => state.LayerUpdated)
     const updateLayerState = useOdkModal((state) => state.updateLayerStatus)
 
+    const onSetAssetType = useMainScreenModal((state) => state.onSetAssetType)
+    const settlementModalToggle = useMainScreenModal((state) => state.onSettlementToggle)
+    const settlementModal = useMainScreenModal((state) => state.onOpen)
+    const onSetSettlementInfo = useMainScreenModal((state) => state.onSetSettlementInfo)
+
     const updateFeature = useAnalyzeModal((state) => state.updateFeature);
 
     const LayerStore = useMapLayers((state) => state);
@@ -203,10 +205,10 @@ function GroundWaterScreen({
     const [clartLayerVisible, setClartLayerVisible] = useState(false);
     const [drainageLayerVisible, setDrainageLayerVisible] = useState(false);
 
+    const [assetInfoButton, setAssetInfoButton] = useState(false);
 
     const [currentLegend, setCurrentLegend] = useState("MWS");
     const [currentlatlong, setCurrentLatLong] = useState(null);
-    const [selectedFeature, setSelectedFeature] = useState(null);
     const [selectedFortnightFeature, setSelectedFortnightFeature] = useState(null);
     const [selectedWellDepthFeature, setSelectedWellDepthFeature] = useState(null);
     const [isBuildRechargeStructureActive, setIsBuildRechargeStructureActive] = useState(false);
@@ -393,6 +395,12 @@ function GroundWaterScreen({
         setShowInfoWaterModal(false);
     };
 
+    const handleAssetInfoModal = (assetType) => {
+        onSetAssetType(assetType)
+        settlementModalToggle()
+        settlementModal()
+    }
+
     const drainageColors = ["03045E","023E8A","0077B6","0096C7","00B4D8","48CAE4","90E0EF","ADE8F4","CAF0F8"]
 
     //Grabbing info from the URL
@@ -463,8 +471,6 @@ function GroundWaterScreen({
             );
         }
 
-        console.log(deltaGLayerFortnight)
-
         deltaGLayerFortnight.setOpacity(0.1);
         deltaGLayerFortnight.setVisible(true);
         deltaGLayerFortnight.setStyle(blankStyle);
@@ -515,11 +521,19 @@ function GroundWaterScreen({
             );
         }
 
-        waterbodies_layer.setStyle(
-            new Style({
-                image: new Icon({ src: wb_mrker }),
-            })
-        );
+        waterbodies_layer.setStyle(function(feature) {
+            const status = feature.values_;
+            if(status.wbs_type in iconsDetails.WB_Icons){
+                return new Style({
+                    image: new Icon({ src: iconsDetails.WB_Icons[status.wbs_type] }),
+                })
+            }
+            else{
+                return new Style({
+                    image: new Icon({ src: LargeWaterBody }),
+                })
+            }
+        });
 
         if (drainageLayer === null) {
             drainageLayer = getVectorLayer(
@@ -634,90 +648,14 @@ function GroundWaterScreen({
 
         planLayerRef.current.setStyle(function(feature) {
             const status = feature.values_;
-            console.log(status)
-            if (status.TYPE_OF_WO == "Check dam") {
+            if(status.TYPE_OF_WO in iconsDetails.Recharge_Icons){
                 return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
+                    image: new Icon({ src: iconsDetails.Recharge_Icons[status.TYPE_OF_WO] }),
                 })
             }
-            else if (status.TYPE_OF_WO == "Percolation tank") {
+            else{
                 return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
-                })  
-            }
-            else if (status.TYPE_OF_WO == "Earthen gully plug") {
-                return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
-                })
-            }
-            else if (status.TYPE_OF_WO == "Drainage/soakage channels") {
-                return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
-                })
-            }
-            else if (status.TYPE_OF_WO == "Recharge pits") {
-                return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
-                })
-            }
-            else if (status.TYPE_OF_WO == "Sokage pits") {
-                return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
-                })
-            }
-            else if (status.TYPE_OF_WO == "Trench cum bund network") {
-                return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
-                })
-            }
-            else if (status.TYPE_OF_WO == "Continuous contour trenches (CCT)") {
-                return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
-                })
-            }
-            else if (status.TYPE_OF_WO == "Staggered Contour trenches(SCT)") {
-                return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
-                })
-            }
-            else if (status.TYPE_OF_WO == "Water absorption trenches(WAT)") {
-                return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
-                })
-            }
-            else if (status.TYPE_OF_WO == "Rock fill dam") {
-                return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
-                })
-            }
-            else if (status.TYPE_OF_WO == "Stone bunding") {
-                return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
-                })
-            }
-            else if (status.TYPE_OF_WO == "Diversion drains") {
-                return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
-                })
-            }
-            else if (status.TYPE_OF_WO == "Bunding:Contour bunds/ graded bunds") {
-                return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
-                })
-            }
-            else if (status.TYPE_OF_WO == "5% model structure") {
-                return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
-                })
-            }
-            else if (status.TYPE_OF_WO == "30-40 model structure") {
-                return new Style({
-                    image: new Icon({ src: wb_mrker_proposed }),
-                })
-            }
-            else {
-                return new Style({
-                    image: new Icon({ src: wb_mrker_proposed}),
+                    image: new Icon({ src: LargeWaterBody }),
                 })
             }
         });
@@ -802,6 +740,7 @@ function GroundWaterScreen({
               setCurrentLatLong(e.coordinate);
               setShowProposeButton(false);
               setSelectedWork(null);
+              setAssetInfoButton(false);
 
               initialMap.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
                 if (layer === deltaGLayerFortnightRef.current) {
@@ -847,6 +786,16 @@ function GroundWaterScreen({
                   iconFeature.setStyle(iconStyle);
                   iconFeature.getGeometry().setCoordinates(e.coordinate);
                   setIsIconFeatureActive(true);
+                  onSetSettlementInfo(feature.values_)
+                  setAssetInfoButton(true);
+                  console.log(feature.values_)
+                }
+
+                if(layer === waterbodies_layer){
+                    setAssetInfoButton(true);
+                    onSetSettlementInfo(feature.values_)
+                    setShowProposeButton(true);
+                    setSelectedWork(feature.values_.wb_id);
                 }
               });
               const select = new Select({
@@ -870,10 +819,7 @@ function GroundWaterScreen({
         const Vectorsource = adminLayer.getSource();
         Vectorsource.once("change", function(e) {
             if (Vectorsource.getState() === "ready") {
-                //const arr = Vectorsource.getExtent();
-                //const mapcenter = [(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2];
                 initialMap.getView().setCenter(mapCenter);
-                //initialMap.getView().setZoom(11);
             }
         });
 
@@ -885,8 +831,6 @@ function GroundWaterScreen({
         });
 
         const accuracyFeature = new Feature();
-
-        //if(geolocation === null){
 
         const geolocation = new Geolocation({
             // enableHighAccuracy must be set to true to have the heading value.
@@ -991,37 +935,14 @@ function GroundWaterScreen({
 
                 planLayer.setStyle(function(feature) {
                     const status = feature.values_;
-
-                    if (status.selected_w == "new farm pond") {
+                    if(status.TYPE_OF_WO in iconsDetails.Recharge_Icons){
                         return new Style({
-                            image: new Icon({ src: farm_pond_proposed }),
+                            image: new Icon({ src: iconsDetails.Recharge_Icons[status.TYPE_OF_WO] }),
                         })
                     }
-
-                    else if (status.selected_w == "new trench cum bund network") {
+                    else{
                         return new Style({
-                            image: new Icon({ src: tcb_proposed }),
-                        })
-                    }
-
-                    else if (status.selected_w == "new check dam") {
-                        return new Style({
-                            image: new Icon({ src: check_dam_proposed }),
-                        })
-                    }
-                    else if (status.selected_w == "Loose Boulder Structure") {
-                        return new Style({
-                            image: new Icon({ src: boulder_proposed }),
-                        })
-                    }
-                    else if (status.selected_w == "Works in Drainage lines") {
-                        return new Style({
-                            image: new Icon({ src: wb_mrker_proposed }),
-                        })
-                    }
-                    else {
-                        return new Style({
-                            image: new Icon({ src: wb_mrker_proposed}),
+                            image: new Icon({ src: LargeWaterBody }),
                         })
                     }
                 });
@@ -1166,18 +1087,30 @@ function GroundWaterScreen({
 
                 {isLayerUpdating && <Loader isOpen={isLayerUpdating} />}
                 <div className={styles.footer_buttons}>
-                    {currentScreen === "main_screen" && buttondisplay && (
-                        <Button label={t("Analyse")} onClick={handleAnalyzeButtonClick} />
-                    )}
+                    
+                    <div className={styles.footer_buttons_main_group}>
+                        {currentScreen === "main_screen" && buttondisplay && (
+                            <Button label={t("Analyse")} onClick={handleAnalyzeButtonClick} />
+                        )}
 
-                    {currentScreen === "main_screen" && buttondisplay && (
-                        <Button
-                            label={t("Start Planning")}
-                            isDisabled={!clartLayerVisible}
-                            onClick={handleClartButtonClick}
-                        />
-                    )}
-
+                        {currentScreen === "main_screen" && buttondisplay && (
+                            <Button
+                                label={t("Start Planning")}
+                                isDisabled={!clartLayerVisible}
+                                onClick={handleClartButtonClick}
+                            />
+                        )}
+                    </div>
+                    <div className={styles.footer_buttons_main_group}>
+                        {currentScreen === "main_screen" && buttondisplay && (
+                            <Button
+                                label={t("Asset Info")}
+                                isNext={true}
+                                isDisabled={assetInfoButton}
+                                onClick={() => handleAssetInfoModal("recharge")}
+                            />
+                        )}
+                    </div>
                     {currentScreen === "start_planning" && (
                         <>
                             <Button
@@ -1215,8 +1148,6 @@ function GroundWaterScreen({
                                         onClick={() => handleFeedbackButtonClick(currentlatlong)}
                                     />
                                 )}
-
-                                {/*<Button label={"2. Map Hamlet"} isDisabled={!isTransientHamletState} onClick={handleMapHamlet} /> */}
                             </div>
                             <Button label={t("Finish")} onClick={handleFinishButton} />
                         </>
@@ -1231,8 +1162,6 @@ function GroundWaterScreen({
                                         onClick={() => handleFeedbackButtonClick(currentlatlong)}
                                     />
                                 )}
-
-                                {/* <Button label={"2. Map Hamlet"} isDisabled={!isTransientState} onClick={handleMapHamlet} /> */}
                             </div>
                             <div className={styles.footer_buttons_main_group}>
                                 <Button label={t("Finish")} onClick={handleFinishButton} />

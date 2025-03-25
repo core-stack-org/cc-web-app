@@ -27,18 +27,10 @@ import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import map_marker from "../asset/map_marker.svg";
 import { useNavigate } from "react-router-dom";
 
-import wb_mrker from "../asset/waterbodies_proposed.svg";
-import irrigation_channel from "../asset/Irrigation_channel.svg";
-import boulder_proposed from "../asset/Loose_boulder_structure.svg";
+import LargeWaterBody from "../asset/waterbodiesScreenIcon.svg";
 import settlementIcon from "../asset/settlement_icon.svg";
-import farm_pond_proposed from "../asset/farm_pond_proposed.svg";
-import tcb_proposed from "../asset/tcb_proposed.svg";
-import canals_proposed from "../asset/canal_proposed.svg";
-import checkDam_proposed from "../asset/check_dam_proposed.svg";
 
-import well_mrker from "../asset/well_proposed.svg";
-import well_mrker_accepted from "../asset/well_accepted.svg";
-import well_mrker_rejected from "../asset/well_rejected.svg";
+import iconsDetails from "../helper/icons.json";
 
 import Button from "../components/Button.js";
 
@@ -571,57 +563,31 @@ function ResourceMappingScreen({
 
     wellLayerRef.current.setStyle(function (feature) {
       const status = feature.values_;
-      if (status.status_re == "approved") {
-        return new Style({
-          image: new Icon({ src: well_mrker_accepted }),
-        });
-      } else if (status.status_re == "rejected") {
-        return new Style({
-          image: new Icon({ src: well_mrker_rejected }),
-        });
-      } else {
-        return new Style({
-          image: new Icon({ src: well_mrker }),
-        });
-      }
+        if(status.status_re in iconsDetails.socialMapping_icons.well){
+            return new Style({
+                image: new Icon({ src: iconsDetails.socialMapping_icons.well[status.status_re] }),
+            })
+        }
+        else{
+            return new Style({
+                image: new Icon({ src: iconsDetails.socialMapping_icons.well["proposed"] }),
+            })
+        }
     });
 
     waterBodiesLayerRef.current.setStyle(function (feature) {
       const status = feature.values_;
-
-      if (status.type_wbs == "Large water body") {
-        return new Style({
-          image: new Icon({ src: wb_mrker }),
-        });
-      } else if (status.type_wbs == "Farm pond") {
-        return new Style({
-          image: new Icon({ src: farm_pond_proposed }),
-        });
-      } else if (status.type_wbs == "Check dam") {
-        return new Style({
-          image: new Icon({ src: checkDam_proposed }),
-        });
-      } else if (status.type_wbs == "Loose boulder structure") {
-        return new Style({
-          image: new Icon({ src: boulder_proposed }),
-        });
-      } else if (status.type_wbs == "Trench cum bund network") {
-        return new Style({
-          image: new Icon({ src: tcb_proposed }),
-        });
-      } else if (status.type_wbs == "Canal") {
-        return new Style({
-          image: new Icon({ src: canals_proposed }),
-        });
-      } else if (status.type_wbs == "Irrigation channel") {
-        return new Style({
-          image: new Icon({ src: irrigation_channel }),
-        });
-      } else {
-        return new Style({
-          image: new Icon({ src: wb_mrker }),
-        });
-      }
+            if(status.wbs_type in iconsDetails.WB_Icons){
+                return new Style({
+                    image: new Icon({ src: iconsDetails.WB_Icons[status.wbs_type] }),
+                })
+            }
+            else{
+                return new Style({
+                    image: new Icon({ src: LargeWaterBody }),
+                })
+            }
+     
     });
 
     remote_wb_layerRef.current.setStyle(
@@ -638,11 +604,7 @@ function ResourceMappingScreen({
     const Vectorsource = adminLayer.getSource();
     Vectorsource.once("change", function (e) {
       if (Vectorsource.getState() === "ready") {
-        //const arr = Vectorsource.getExtent();
-        //const mapcenter = [(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2];
         initialMap.getView().setCenter(mapCenter);
-
-        //initialMap.getView().setZoom(13);
       }
     });
 
@@ -854,11 +816,19 @@ function ResourceMappingScreen({
         currentPlan.plan_id
       );
 
-      well_layer.setStyle(
-        new Style({
-          image: new Icon({ src: well_mrker }),
-        })
-      );
+      well_layer.setStyle(function (feature) {
+        const status = feature.values_;
+          if(status.status_re in iconsDetails.socialMapping_icons.well){
+              return new Style({
+                  image: new Icon({ src: iconsDetails.socialMapping_icons.well[status.status_re] }),
+              })
+          }
+          else{
+              return new Style({
+                  image: new Icon({ src: iconsDetails.socialMapping_icons.well["proposed"] }),
+              })
+          }
+      });
 
       mapRef.current.removeLayer(wellLayerRef.current);
 
@@ -877,51 +847,21 @@ function ResourceMappingScreen({
         currentPlan.plan_id
       );
 
-      waterbodies_layer.setStyle(
-        new Style({
-          image: new Icon({ src: wb_mrker }),
-        })
-      );
-
       mapRef.current.removeLayer(waterBodiesLayerRef.current);
 
       waterBodiesLayerRef.current = waterbodies_layer;
 
       waterBodiesLayerRef.current.setStyle(function (feature) {
         const status = feature.values_;
-
-        if (status.type_wbs == "Large water body") {
-          return new Style({
-            image: new Icon({ src: wb_mrker }),
-          });
-        } else if (status.type_wbs == "Farm pond") {
-          return new Style({
-            image: new Icon({ src: farm_pond_proposed }),
-          });
-        } else if (status.type_wbs == "Check dam") {
-          return new Style({
-            image: new Icon({ src: checkDam_proposed }),
-          });
-        } else if (status.type_wbs == "Loose boulder structure") {
-          return new Style({
-            image: new Icon({ src: boulder_proposed }),
-          });
-        } else if (status.type_wbs == "Trench cum bund network") {
-          return new Style({
-            image: new Icon({ src: tcb_proposed }),
-          });
-        } else if (status.type_wbs == "Canal") {
-          return new Style({
-            image: new Icon({ src: canals_proposed }),
-          });
-        } else if (status.type_wbs == "Irrigation channel") {
-          return new Style({
-            image: new Icon({ src: wb_mrker }),
-          });
-        } else {
-          return new Style({
-            image: new Icon({ src: wb_mrker }),
-          });
+        if(status.wbs_type in iconsDetails.WB_Icons){
+            return new Style({
+                image: new Icon({ src: iconsDetails.WB_Icons[status.wbs_type] }),
+            })
+        }
+        else{
+            return new Style({
+                image: new Icon({ src: LargeWaterBody }),
+            })
         }
       });
 
