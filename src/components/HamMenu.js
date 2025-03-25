@@ -5,13 +5,9 @@ import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import closeIcon from "../asset/close_icon.svg";
 import {
-  faMapMarkedAlt,
   faLanguage,
   faFileAlt,
   faFileUpload,
-  faQuestion,
-  faUser,
-  faBug,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -21,9 +17,6 @@ const HamMenu = ({ screenTitle, screenIcon }) => {
   const [isopen, setOpen] = useState(false);
 
   const onOpen = useMainScreenModal((state) => state.onOpen);
-  const onSetLocationModal = useMainScreenModal(
-    (state) => state.onSetLocationModal
-  );
 
   const onSetUploadKML = useMainScreenModal((state) => state.onSetUploadKML);
 
@@ -92,13 +85,6 @@ const HamMenu = ({ screenTitle, screenIcon }) => {
           </div>
           <div className={styles.menu_item_section}>
             <div className={styles.menu_top}>
-              <div
-                className={styles.menu_item}
-                onClick={() => handleToggle(onSetLocationModal)}
-              >
-                <FontAwesomeIcon icon={faMapMarkedAlt} />
-                <div className={styles.menu_item_start}>{t("Select Location")}</div>
-              </div>
               <div
                 className={`${styles.menu_item}`} // unset when the functionality is working fine
                 onClick={() => handleToggle(onSetLanguageChange)}

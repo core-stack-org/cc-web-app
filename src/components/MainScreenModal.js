@@ -108,7 +108,20 @@ const MainScreenModal = () => {
           "select_o_5" : "Does it needs Maintainence",
           "select_one" : "Managed By",
           "need_maint": "Maintenance Required",
-
+        },
+        "recharge" : {
+            "TYPE_OF_WO" : "Type of Work",
+            "ben_name" : "Beneficiary Name",
+            "ben_settle" : "Beneficiary Settlement Name",
+            "block_nam" : "Block Name",
+            "latitude" : "Latitude",
+            "longitude" : "Longitude",
+            "status_re" : "Approval Status",
+            "work_id" : "Work Id",
+            "today" : "Date on which Work was Marked",
+            "plan_name" : "Plan Name",
+            "plan_id" : "Plan Id",
+            "note" : "Notes"
         }
     }
 
@@ -117,15 +130,31 @@ const MainScreenModal = () => {
     const onSetBugReportModal = useMainScreenModal((state) => state.onSetBugReportModal)
 
     const tableStyle = {
-        borderCollapse: 'collapse',
-        width: '100%',
-        marginBottom : '4em'
-    };
-
-    const cellStyle = {
-        border: '1px solid #ddd',
-        padding: '8px',
-    };
+        borderCollapse: "separate",
+        borderSpacing: 0,
+        width: "100%",
+        borderRadius: "8px",
+        overflow: "hidden",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
+      };
+    
+      const cellStyle = {
+        padding: "10px 16px",
+        borderBottom: "1px solid #e9ecef",
+        color: "#4a5568",
+        fontSize: "14px",
+        transition: "background-color 0.2s",
+      };
+    
+      const containerStyle = {
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '1.5em',
+        marginTop: '0.8em',
+        maxHeight: '100vh',
+        overflowY: 'auto',
+      };
 
     if (!isOpen) {
         return null;
@@ -231,51 +260,6 @@ const MainScreenModal = () => {
         onClose()
     }
 
-    const LocationBody = (
-        <div className={styles.select_option_group}>
-            <div className={styles.select_option}>
-                <label className={styles.select_option_label}>{t("Select State")} :</label>
-                <select name="state" id="state" value={state} onChange={handleChange} className={styles.select_dropdown}>
-                    <option value={""}>None</option>
-                    {locationData?.map((item, idx) => {
-                        return (<option key={idx} value={item.label}>{item.label}</option>)
-                    })}
-                </select>
-            </div>
-            <div className={styles.select_option}>
-                <label className={styles.select_option_label} >{t("Select District")} :</label>
-                <select name="district" id="district" value={district} onChange={handleChange} className={styles.select_dropdown} disabled={state !== "" ? false : true}>
-                    <option value={""}>None</option>
-                    {locationData?.map((item) => {
-                        if (item.label === state) {
-                            return (item.district.map((data, idx) => {
-                                return <option key={idx} value={data.label}>{data.label}</option>
-                            }))
-                        }
-                    })}
-                </select>
-            </div>
-            <div className={styles.select_option}>
-                <label className={styles.select_option_label}>{t("Select Block")} :</label>
-                <select name="block" id="block" value={block} onChange={handleChange} className={styles.select_dropdown} disabled={district !== "" ? false : true}>
-                    <option value={""}>None</option>
-                    {locationData?.map((item) => {
-                        if (item.label === state) {
-                            return (item.district.map((data) => {
-                                if (data.label == district) {
-                                    return (data.blocks.map((val, idx) => {
-                                        return <option key={idx} value={val.label}>{val.label}</option>
-                                    }))
-                                }
-                            }))
-                        }
-                    })}
-                </select>
-            </div>
-            <button className={styles.location_submit_button} onClick={handleLocationChange}>{t("Change Location")}</button>
-        </div>
-    )
-
     const uploadKMLBody = (
         <div className={styles.select_option_group}>
             <div className={styles.select_option}>
@@ -315,12 +299,7 @@ const MainScreenModal = () => {
     )
 
     const informationBody = (
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          padding: '1em',
-          marginTop: '0.8em'
-          }}>
+        <div style={containerStyle}>
           <table style={tableStyle}>
               <tbody>
                   {assetData != null && Object.keys(assetData).map((key,idx) =>{
@@ -353,8 +332,7 @@ const MainScreenModal = () => {
     let title = null 
     let body = null 
 
-    if(locationModal){title = "Location Selection"; body = LocationBody}
-    else if(uploadKMLModal) {title = "Upload KML File"; body = uploadKMLBody}
+    if(uploadKMLModal) {title = "Upload KML File"; body = uploadKMLBody}
     else if(generateDPR) {title = "Generate DPR"; body = generateDPRBody}
     else if(settlementInfo) {title = "Asset Information"; body = informationBody}
     else if(BugReportModal) {title = "Report Bug"; body = bugReportBody}
