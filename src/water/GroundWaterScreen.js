@@ -206,6 +206,7 @@ function GroundWaterScreen({
     const [drainageLayerVisible, setDrainageLayerVisible] = useState(false);
 
     const [assetInfoButton, setAssetInfoButton] = useState(false);
+    const [assetType, setAssetType] = useState("")
 
     const [currentLegend, setCurrentLegend] = useState("MWS");
     const [currentlatlong, setCurrentLatLong] = useState(null);
@@ -395,7 +396,7 @@ function GroundWaterScreen({
         setShowInfoWaterModal(false);
     };
 
-    const handleAssetInfoModal = (assetType) => {
+    const handleAssetInfoModal = () => {
         onSetAssetType(assetType)
         settlementModalToggle()
         settlementModal()
@@ -788,7 +789,7 @@ function GroundWaterScreen({
                   setIsIconFeatureActive(true);
                   onSetSettlementInfo(feature.values_)
                   setAssetInfoButton(true);
-                  console.log(feature.values_)
+                  setAssetType("recharge")
                 }
 
                 if(layer === waterbodies_layer){
@@ -796,6 +797,7 @@ function GroundWaterScreen({
                     onSetSettlementInfo(feature.values_)
                     setShowProposeButton(true);
                     setSelectedWork(feature.values_.wb_id);
+                    setAssetType("waterStructure")
                 }
               });
               const select = new Select({
@@ -1107,7 +1109,7 @@ function GroundWaterScreen({
                                 label={t("Asset Info")}
                                 isNext={true}
                                 isDisabled={assetInfoButton}
-                                onClick={() => handleAssetInfoModal("recharge")}
+                                onClick={() => handleAssetInfoModal()}
                             />
                         )}
                     </div>
