@@ -121,8 +121,8 @@
     align-items: center;
     border-bottom: 1px solid rgba(232, 232, 232, 0.6);
     position: relative;
-    background: linear-gradient(to right, #592941, #7b3f5a);
-    color: white;
+    background: linear-gradient(to right, #D6D4C8, #D6D4C8);
+    color: black;
 }
 
 .m_menu__header span {
