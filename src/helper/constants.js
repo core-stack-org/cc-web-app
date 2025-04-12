@@ -1,6 +1,5 @@
-exports.app_name = "nrmApp";
-//exports.app_domain = 'http://localhost:3000'
-exports.app_domain = "https://nrm.gramvaanidev.org";
+exports.app_name = "commonsconnect";
+exports.app_domain = "https://nrm.core-stack.org";
 exports.GEOSERVER_URL = "https://geoserver.core-stack.org:8443";
 exports.api_url = "https://geoserver.core-stack.org/api/v1/";
 // exports.api_url = "https://8582-119-252-199-91.ngrok-free.app/api/v1/";

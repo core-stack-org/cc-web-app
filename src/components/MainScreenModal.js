@@ -180,7 +180,7 @@ const MainScreenModal = () => {
 
     const handleLocationChange = () => {
         if (district !== "" && block !== "") {
-            const url = `https://nrm.gramvaanidev.org/maps?geoserver_url=https://geoserver.core-stack.org:8443&block_pkey=null&app_name=nrmApp&state_name=${state}&dist_name=${district}&block_name=${block}`
+            const url = `https://nrm.core-stack.org/maps?geoserver_url=https://geoserver.core-stack.org:8443&block_pkey=null&app_name=nrmApp&state_name=${state}&dist_name=${district}&block_name=${block}`
             setState("")
             setDistrict("")
             setBlock("")
