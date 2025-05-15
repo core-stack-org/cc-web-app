@@ -542,32 +542,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
         features: [accuracyFeature, positionFeature],
       }),
     });
-
-    // if (adminLayerRef.current) {
-    //   LayerStore.addLayersState("Admin Boundary", adminLayerRef, LayerStore.Layers);
-    // }
-
-    // if (nregaLayerRef.current) {
-    //   LayerStore.addLayersState("NREGA Assets", nregaLayerRef, LayerStore.Layers);
-    // }
-
-    // if (SettlementLayerRef.current) {
-    //   LayerStore.addLayersState("Settlement Layer", SettlementLayerRef, LayerStore.Layers);
-    // }
-
-    // if (WellLayerRef.current) {
-    //   LayerStore.addLayersState("Well Layer", WellLayerRef, LayerStore.Layers);
-    // }
-
-    // if (WaterStructureLayerRef.current) {
-    //   LayerStore.addLayersState("Water Structure Layer", WaterStructureLayerRef, LayerStore.Layers);
-    // }
-
-    // // Update the layers presence status if at least one layer is registered
-    // if (Object.keys(LayerStore.Layers).length > 0) {
-    //   LayerStore.updateStatus(true);
-    // }
-
+    
     setIsLoading(false);
 
     return () => {
@@ -899,13 +874,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
               icon={faInfoCircle}
             />
           </div>
-          {/* <div className={styles.header_secondary_button}>
-            <Button
-              onClick={onOpenLayers}
-              isIcon={true}
-              icon={faLayerGroup}
-            />
-          </div> */}
+
           <div className={styles.header_secondary_button}>
             {!isInBlock && (
               <Button
