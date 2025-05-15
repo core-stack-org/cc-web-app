@@ -525,7 +525,7 @@ function WaterBodiesScreen({
       waterBodiesLayerRef,
       LayerStore.Layers
     );
-    LayerStore.addLayersState("NREGA Layer", nregaLayerRef, LayerStore.Layers);
+    // LayerStore.addLayersState("NREGA Layer", nregaLayerRef, LayerStore.Layers);
     LayerStore.addLayersState(
       "Drainage Layer",
       drainageLayerRef,

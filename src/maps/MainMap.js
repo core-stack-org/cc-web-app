@@ -90,7 +90,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
   const [infoBoxType, setInfoBoxType] = useState(null);
 
-  const [activeYears, setActiveYears] = useState([2021, 2022]);
+  const [activeYears, setActiveYears] = useState([]);
 
   const [planningState, setPlanningState] = useState(false);
 
@@ -188,7 +188,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
   }
 
   const [nregaStyle, setNregaStyle] = useState({
-    filter: ['in', ['get', 'workYear'], [2016, 2017, 2018]],
+    filter: ['in', ['get', 'workYear'], []],
     'shape-points': 10,
     'shape-radius': 13,
     'shape-fill-color': [
@@ -340,6 +340,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     localStorage.setItem("block_id", queryParameters.get("block_id"));
   }
 
+  // MARK: useEffect for initial geolocation setup
   useEffect(() => {
     setScreenTitle(localStorage.getItem("block_name"));
     setScreenIcon(null);
@@ -463,6 +464,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       multiWorld: true,
     });
 
+    // MARK: Initial Map
     const initialMap = new Map({
       target: mapElement.current,
       layers: [BaseLayer, AdminLayer, NregaLayer],
@@ -485,7 +487,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       }
     });
 
-    //? Code for retaining Zoom levels
+    // MARK: Code for retaining Zoom levels
     mapRef.current.on('moveend', (e) => {
       let newZoom = mapRef.current.getView().getZoom()
       setZoomLevel(newZoom)
@@ -508,7 +510,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       }
     });
 
-    //? Code Block for GPS
+    // MARK: Code Block for GPS
     const accuracyFeature = new Feature();
 
     const geolocation = new Geolocation({
@@ -541,30 +543,30 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       }),
     });
 
-    if (adminLayerRef.current) {
-      LayerStore.addLayersState("Admin Boundary", adminLayerRef, LayerStore.Layers);
-    }
+    // if (adminLayerRef.current) {
+    //   LayerStore.addLayersState("Admin Boundary", adminLayerRef, LayerStore.Layers);
+    // }
 
-    if (nregaLayerRef.current) {
-      LayerStore.addLayersState("NREGA Assets", nregaLayerRef, LayerStore.Layers);
-    }
+    // if (nregaLayerRef.current) {
+    //   LayerStore.addLayersState("NREGA Assets", nregaLayerRef, LayerStore.Layers);
+    // }
 
-    if (SettlementLayerRef.current) {
-      LayerStore.addLayersState("Settlement Layer", SettlementLayerRef, LayerStore.Layers);
-    }
+    // if (SettlementLayerRef.current) {
+    //   LayerStore.addLayersState("Settlement Layer", SettlementLayerRef, LayerStore.Layers);
+    // }
 
-    if (WellLayerRef.current) {
-      LayerStore.addLayersState("Well Layer", WellLayerRef, LayerStore.Layers);
-    }
+    // if (WellLayerRef.current) {
+    //   LayerStore.addLayersState("Well Layer", WellLayerRef, LayerStore.Layers);
+    // }
 
-    if (WaterStructureLayerRef.current) {
-      LayerStore.addLayersState("Water Structure Layer", WaterStructureLayerRef, LayerStore.Layers);
-    }
+    // if (WaterStructureLayerRef.current) {
+    //   LayerStore.addLayersState("Water Structure Layer", WaterStructureLayerRef, LayerStore.Layers);
+    // }
 
-    // Update the layers presence status if at least one layer is registered
-    if (Object.keys(LayerStore.Layers).length > 0) {
-      LayerStore.updateStatus(true);
-    }
+    // // Update the layers presence status if at least one layer is registered
+    // if (Object.keys(LayerStore.Layers).length > 0) {
+    //   LayerStore.updateStatus(true);
+    // }
 
     setIsLoading(false);
 
@@ -580,7 +582,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       if (WellLayerRef.current !== null) { mapRef.current.removeLayer(WellLayerRef.current) }
       if (WaterStructureLayerRef.current !== null) { mapRef.current.removeLayer(WaterStructureLayerRef.current) }
 
-      LayerStore.updateCurrPlan(currentPlan)
+      // LayerStore.updateCurrPlan(currentPlan)
 
       let SettlementLayer = null;
       let WaterStructureLayer = null;
@@ -655,12 +657,12 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       WellLayerRef.current = WellLayer
       WaterStructureLayerRef.current = WaterStructureLayer
 
-      LayerStore.addLayersState("Settlement Layer", SettlementLayerRef, LayerStore.Layers);
-      LayerStore.addLayersState("Well Layer", WellLayerRef, LayerStore.Layers);
-      LayerStore.addLayersState("Water Structure Layer", WaterStructureLayerRef, LayerStore.Layers);
+      // LayerStore.addLayersState("Settlement Layer", SettlementLayerRef, LayerStore.Layers);
+      // LayerStore.addLayersState("Well Layer", WellLayerRef, LayerStore.Layers);
+      // LayerStore.addLayersState("Water Structure Layer", WaterStructureLayerRef, LayerStore.Layers);
 
       // Force a UI refresh to update the toggle states
-      LayerStore.updateStatus(true);
+      // LayerStore.updateStatus(true);
 
       mapRef.current.on("click", (e) => {
         setInfoBoxType(null)
@@ -739,6 +741,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     }
   }, [LayerStore.customKML]);
 
+  // MARK: GPS Location Zoom
   const zoomToGPSLocation = () => {
     // For the time being, zooming to current location for testing
     // To zoom only within the extent of the block, remove the marked lines and uncomment the lines below it.
@@ -769,7 +772,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     }
   };
 
-  // Colour-coding NREGA works based on Work Category
+  // MARK: NREGA Works Toggle
   const handleWorksToggle = async (item) => {
     let checked = nregaWorks.includes(item);
     let temp_works
@@ -818,6 +821,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     mapRef.current.addLayer(nregaWebGlLayer)
   };
 
+  // MARK: NREGA Year Toggle
   const handleNregaYearToggle = async (temp_year) => {
     let temp_active_years = []
     if (activeYears.includes(temp_year)) {
@@ -895,13 +899,13 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
               icon={faInfoCircle}
             />
           </div>
-          <div className={styles.header_secondary_button}>
+          {/* <div className={styles.header_secondary_button}>
             <Button
               onClick={onOpenLayers}
               isIcon={true}
               icon={faLayerGroup}
             />
-          </div>
+          </div> */}
           <div className={styles.header_secondary_button}>
             {!isInBlock && (
               <Button

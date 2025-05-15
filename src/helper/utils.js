@@ -157,7 +157,7 @@ function getVectorLayer(layer_store, layer_name, setVisible = true, setActive = 
 
   if (layer_store === "nrega_assets") {
     const style = {
-      filter: ['in', ['get', 'workYear'], [2016, 2017, 2018]],
+      filter: ['in', ['get', 'workYear'], []],
       'shape-points': 10,
       'shape-radius': 13,
       'shape-fill-color': [
