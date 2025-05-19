@@ -1,9 +1,8 @@
 exports.app_name = "commonsconnect";
 exports.app_domain = "https://nrm.core-stack.org";
 exports.GEOSERVER_URL = "https://geoserver.core-stack.org:8443";
-// exports.api_url = "https://geoserver.core-stack.org/api/v1/";
-exports.api_url =
-  "https://9691-2001-df4-e000-3fc3-8e68-299f-3a9c-4e69.ngrok-free.app/api/v1/";
+exports.api_url = "https://geoserver.core-stack.org/api/v1/";
+// exports.api_url = "https://9691-2001-df4-e000-3fc3-8e68-299f-3a9c-4e69.ngrok-free.app/api/v1/";
 exports.screen_mapping = { main: "nrega,admin", water: "delta_g" };
 // recharge structure
 exports.gw_odk_url =
