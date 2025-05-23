@@ -201,7 +201,7 @@ const WaterBodiesModal = () => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={"Water Bodies Analysis Graph"}
+      title={t("swb_heading")}
       body={bodyContent}
     />
   );

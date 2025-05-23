@@ -2,6 +2,7 @@
     "Mohanpur" : "Mohanpur",
 
     "t_plan": "Select Plan",
+    "select_plan" : "Select a plan first!",
 
     "info_main_1" : "Select a plan.",
     "info_main_2" : "Mark settlements and resource ownership and usage under the Resource Mapping tab.",

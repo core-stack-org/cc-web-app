@@ -398,7 +398,7 @@ const GroundWaterModal = () => {
 
   return (
     <Modal
-      title={"GroundWater Analysis Graph"}
+      title={t("gw_heading")}
       body={bodyContent}
       isOpen={isOpen}
       onClose={onClose}
