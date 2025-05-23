@@ -225,7 +225,7 @@ const GroundWaterModal = () => {
     >
       <div style={{ marginTop: "2em", fontWeight: "600", fontSize: "small" }}>
         {" "}
-        <p>Change in Groundwater table over the years</p>{" "}
+        <p>{t("info_gw_header_1")}</p>{" "}
       </div>
       <ThemeProvider theme={theme}>
         <CustomSlider
@@ -235,7 +235,7 @@ const GroundWaterModal = () => {
         />
         <div style={{ marginTop: "2em", fontWeight: "600", fontSize: "small" }}>
         {" "}
-          <p>Yearly</p>{" "}
+          <p>{t("yearly")}</p>{" "}
         </div>
 
         <div
@@ -274,7 +274,7 @@ const GroundWaterModal = () => {
       
       <div style={{ marginTop: "2em", fontWeight: "600", fontSize: "small" }}>
         {" "}
-        <p>Fortnightly</p>{" "}
+        <p>{t("fortnightly")}</p>{" "}
       </div>
       <div style={{ width: "100%", overflowX: "hidden" }}>
         <div style={{ width: "90%" }}>
@@ -376,25 +376,25 @@ const GroundWaterModal = () => {
       </div>
 
       <div style={textContainerStyle}>
-        <h3>Precipitation and RunOff</h3>
+        <h3>{t("info_gw_header_2")}</h3>
         <p>{t("info_gw_modal_1")}</p>
         <br></br>
 
-        <h3>Evapotranspiration</h3>
+        <h3>{t("info_gw_header_3")}</h3>
         <p>{t("info_gw_modal_2")}</p>
         <br></br>
 
-        <h3>Groundwater</h3>
+        <h3>{t("info_gw_header_4")}</h3>
         <p>{t("info_gw_modal_3")}</p>
         <br></br>
-        <p>You can use the slider on the top to move across different years.</p>
+        <p>{t("instruct_gw")}</p>
       </div>
 
       <div style={centerStyle}>
-        <Button label={"Provide Feedback"} onClick={handleGWFeedbackClick} />
+        <Button label={t("feedback")} onClick={handleGWFeedbackClick} />
       </div>
     </div>
-  );
+  );  
 
   return (
     <Modal
