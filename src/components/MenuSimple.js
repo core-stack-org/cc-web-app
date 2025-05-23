@@ -7,8 +7,12 @@ import { styled } from '@mui/system';
 
 import usePlansStore from "../hooks/usePlans.js";
 import { createTheme } from '@mui/material';
+import { useTranslation } from "react-i18next";
+
 
 export default function MenuSimple({ isDisabled = false }) {
+
+  const { t } = useTranslation();
 
   const { plans, currentPlan, focusTrigger, setCurrentPlan, setFocusTrigger } = usePlansStore((state) => {
     return { plans: state.plans, currentPlan: state.currentPlan, focusTrigger: state.focusTrigger, setCurrentPlan: state.setCurrentPlan, setFocusTrigger: state.setFocusTrigger };
@@ -33,7 +37,7 @@ export default function MenuSimple({ isDisabled = false }) {
 
   return (
     <Dropdown>
-      <MenuButton theme={theme}>{currentPlan == null ? "Select Plan" : currentPlan.plan}</MenuButton>
+      <MenuButton theme={theme}>{currentPlan == null ? t("t_plan") : currentPlan.plan}</MenuButton>
       {!isDisabled && <Menu slots={{ listbox: Listbox }}>
 
         {plans !== null ? (

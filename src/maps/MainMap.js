@@ -839,7 +839,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       setFocusTrigger(false);
       setPlanningState(!planningState);
     } else {
-      toast.error("First, select a plan!");
+      toast.error(t("select_plan"), {duration: 700});
       setFocusTrigger(true);
     }
   };

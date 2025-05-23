@@ -192,7 +192,7 @@ const WaterBodiesModal = () => {
 
 
       <div style={centerStyle}>
-        <Button label={"Provide Feedback"} onClick={handleWBFeedbackClick} />
+        <Button label={t("feedback")} onClick={handleWBFeedbackClick} />
       </div>
     </div> : <></>
   );

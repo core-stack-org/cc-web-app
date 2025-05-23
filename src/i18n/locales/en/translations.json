@@ -1,6 +1,8 @@
 {
     "Mohanpur" : "Mohanpur",
 
+    "t_plan": "Select Plan",
+
     "info_main_1" : "Select a plan.",
     "info_main_2" : "Mark settlements and resource ownership and usage under the Resource Mapping tab.",
     "info_main_3" : "To start beginning planning natural resource management work, go to these tabs under planning tab:",
@@ -28,12 +30,24 @@
 
     "info_liveli_1" : "The other Non-NRM work requirements are captured under the livelihood section.",
 
+    "gw_heading": "GroundWater Analysis Graph",
+    "info_gw_header_1": "Change in Groundwater table over the years",
+    "info_gw_header_2": "Precipitation and RunOff",
+    "info_gw_header_3": "Evapotranspiration",
+    "info_gw_header_4": "Groundwater",
     "info_gw_modal_1" : "The first graph shows the amount of rainfall in this area, and the portion of that rainfall lost in runoff. High runoff would typically indicate an opportunity for constructing groundwater recharge structures such as check dams, percolation tanks, and trenches and bunds.",
     "info_gw_modal_2" : "The second graph shows for the area the water lost from water bodies through evaporation, and from vegetation through transpiration. An increase in cropping intensity would typically result in an increase in evapotranspiration due to greater use of water, often obtained from groundwater. A different choice of crops and trees would change the evapotranspiration in an area.",
     "info_gw_modal_3" : "The third graph shows the drop or increase in groundwater levels. Greater evapotranspiration, greater runoff, or less rainfall, would typically lead to a drop in groundwater levels. Recharge structures to improve groundwater, or alternative cropping patterns to reduce water usage, can help improve groundwater levels.",
+    "instruct_gw": "You can use the slider on the top to move across different years.",
+    "yearly": "Yearly",
+    "fortnightly": "Fortnightly",
 
+    "swb_heading": "Water Bodies Analysis Graph",
     "info_swb_modal_1" : "This shows the area of the water body where water was present during the Kharif season coinciding with the monsoons, the area during Rabi season post-monsoon, and the area during the Zaid summer season. Water Bodies that were filling up earlier but are lately not filling up may need some repair work like desilting or cleaning up of inlet channels to collect runoff. You can use the slider to move across different years.",
 
+    "agri_heading": "Agriculture Analysis Graph",
+    "drought_header": "Drought Frequency",
+    "cropping_in_header": "Cropping Intensity",
     "info_agri_modal_1" : "This shows the number of weeks during the Kharif season that this area was under mild drought conditions, medium drought conditions, or severe drought conditions. The Government of India definition of mild/medium/severe drought is based on dry spells and visible decrease in greenness. Areas under drought may benefit from farm ponds for protective irrigation. You can use the slider to move across different years.",
     "info_agri_modal_2" : "This shows the cropping intensity in this area, as the percentage of cropping area that was under single cropping, double cropping, or triple cropping. Single cropping is mostly rainfed, whereas double cropping typically requires access to irrigation. Cropping intensity increase may suggest groundwater usage for irrigation, and cropping intensity decrease may suggest land degradation or drying up of aquifers for groundwater based irrigation. You can use the slider to move across different years."
 }

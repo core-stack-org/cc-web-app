@@ -176,7 +176,7 @@ const AgricultureModal = () => {
   const bodyContent = ( droughtFreq !== null && CropPatternData !== null ?
     <div style={barGraphContainerStyle}>
       <div style={graphAndSliderContainerStyle}>
-        <h2 style={headerStyle}>Drought Frequency</h2>
+        <h2 style={headerStyle}>{t("drought_header")}</h2>
         <ResponsiveContainer width="100%" height={250}>
           <BarChart
             data={droughtFreq.filter((d) => d.year === selectedYear)}
@@ -214,7 +214,7 @@ const AgricultureModal = () => {
         </ThemeProvider>
 
         <div style={{ width: "100%", height: "250px", marginTop: "20px" }}>
-          <h2 style={headerStyle}>Cropping Intensity</h2>
+          <h2 style={headerStyle}>{t("cropping_in_header")}</h2>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart
               data={CropPatternData.filter((d) => d.year === selectedYear)}
@@ -293,7 +293,7 @@ const AgricultureModal = () => {
           {/* Feedback button at the end */}
           <div style={centerStyle}>
             <Button
-              label={"Provide Feedback"}
+              label={t("feedback")}
               onClick={handleAgriFeedbackClick}
             />
           </div>
@@ -306,7 +306,7 @@ const AgricultureModal = () => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title={"Agriculture Analysis Graph"}
+      title={t("agri_heading")}
       body={bodyContent}
     />
   );

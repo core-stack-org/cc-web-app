@@ -137,18 +137,18 @@ function getVectorLayer(layer_store, layer_name, setVisible = true, setActive = 
           return item;
         }));
       }).catch(error => {
-        if (!errorReported) {
-          toast.error(`Failed to load the "${layer_name}" layer. Please check your connection or the map layer details.`, {
-            duration: 6000,
-            position: 'top-center',
-            style: {
-              borderRadius: '10px',
-              background: '#333',
-              color: '#fff',
-            },
-          });
-          errorReported = true;
-        }
+        // if (!errorReported) {
+        //   toast.error(`Failed to load the "${layer_name}" layer. Please check your connection or the map layer details.`, {
+        //     duration: 500,
+        //     position: 'top-center',
+        //     style: {
+        //       borderRadius: '10px',
+        //       background: '#333',
+        //       color: '#fff',
+        //     },
+        //   });
+        //   errorReported = true;
+        // }
       });
     }
   });
