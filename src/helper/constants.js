@@ -25,7 +25,7 @@ exports.add_pr_new_rc_st_odk_url =
 // TODO: add the new link
 // maintenance remote swb
 exports.add_propose_maintainence_satellite_odk_url =
-  "https://odk.gramvaani.org/-/single/7sf9nT6OBSpm2IrfpFvzwpiRoJ54JBa?st=E601NPG8bJwF8uoGXVmWtH2Q7aFZJo2Wzkg$zsF8xTTrt3ONGuK6pvM4P!cpQLoo&d[/data/GPS_point/point_mapsappearance]=";
+  "https://odk.core-stack.org/-/single/1x2srUjaxXeg4hqOVPqY1tLl4naIPnd?st=H04pS4tz1fE9nOREeKEFC0FrvF8OdFeE7czhpOVTWJQ2ehC!IFP7fke4jg!ZQf3V&d[/data/GPS_point/point_mapsappearance]=";
 // maintenance swb
 exports.add_remote_sensed_waterbodies_odk_url =
   "https://odk.core-stack.org/-/single/6LuxBpV2ohTtxJSnFcwhGS399vAJwe0?st=jCR5wJ!ZjU5!yrQt0e7KoV9eOmvHgKiLwRIiL40IuoZ53yQ8VNH4yb!N7k0Of7Tp&d[/data/GPS_point/point_mapsappearance]=";
