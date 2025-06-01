@@ -16,6 +16,7 @@ import {
   faCrosshairs,
   faInfoCircle,
   faLayerGroup,
+  faRedo,
 } from "@fortawesome/free-solid-svg-icons";
 
 import InfoModal from "../info/infoModal";
@@ -67,6 +68,7 @@ import { useTranslation } from "react-i18next";
 function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
   const mapElement = useRef();
   const mapRef = useRef();
+  const geolocationRef = useRef(null);
 
   const osmLayerRef = useRef(null);
   const adminLayerRef = useRef(null);
@@ -500,82 +502,35 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
     mapRef.current = initialMap;
 
-    mapRef.current.on("click", (e) => {
-      setShowNregaDropdown(false);
-
-      const features = mapRef.current.getFeaturesAtPixel(e.pixel, {
-        layerFilter: (layer) => layer === nregaLayerRef.current,
-      });
-
-      if (features.length > 0) {
-        setSelectedFeatures(features);
-        setInfoBoxType("nrega");
-        setShowBottomSheet(true);
-      }
-    });
-
-    // MARK: Code for retaining Zoom levels
-    mapRef.current.on("moveend", (e) => {
-      let newZoom = mapRef.current.getView().getZoom();
-      setZoomLevel(newZoom);
-    });
-
-    //? Centering the map to the selected block
-    const Vectorsource = AdminLayer.getSource();
-    Vectorsource.once("change", function (e) {
-      if (Vectorsource.getState() === "ready") {
-        if (mapCenter === null) {
-          const arr = Vectorsource.getExtent();
-          const mapcenter = [(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2];
-          initialMap.getView().setZoom(13);
-          initialMap.getView().setCenter(mapcenter);
-        } else {
-          initialMap.getView().setZoom(zoomLevel);
-          initialMap.getView().setCenter(mapCenter);
-        }
-      }
-    });
-
-    // MARK: Code Block for GPS
-    const accuracyFeature = new Feature();
-
-    const geolocation = new Geolocation({
-      // enableHighAccuracy must be set to true to have the heading value.
+    const olGeolocation = new Geolocation({
       trackingOptions: {
         enableHighAccuracy: true,
       },
       projection: view.getProjection(),
     });
 
-    console.log("Geolocation: Attempting to start tracking...");
-    geolocation.setTracking(true);
-    console.log(
-      "Geolocation: Tracking status after setTracking(true):",
-      geolocation.getTracking()
-    );
+    geolocationRef.current = olGeolocation;
 
-    geolocation.on("change:position", function () {
-      const coordinates = geolocation.getPosition();
-      console.log(
-        "OL Geolocation 'change:position' event. Coords:",
-        coordinates
-      ); // DEBUG LOG
-      setGpsLocation(coordinates);
-      const accuracy = geolocation.getAccuracy();
-      positionFeatureRef.current.setGeometry(
-        coordinates ? new Point(coordinates) : null
-      );
+    olGeolocation.setTracking(true);
+
+    olGeolocation.on("change:position", function () {
+      const coordinates = olGeolocation.getPosition();
+      if (coordinates) {
+        if (positionFeatureRef.current) {
+          positionFeatureRef.current.setGeometry(new Point(coordinates));
+        }
+        setGpsLocation(coordinates);
+      }
     });
 
-    geolocation.on("error", function (error) {
+    olGeolocation.on("error", function (error) {
       console.error("OL Geolocation error:", error.message, error);
-      // Example: error.code can be 1 (PERMISSION_DENIED), 2 (POSITION_UNAVAILABLE), 3 (TIMEOUT)
     });
 
     new VectorLayer({
       map: initialMap,
       source: new VectorSource({
-        features: [accuracyFeature, positionFeature],
+        features: [positionFeature],
       }),
     });
 
@@ -583,143 +538,11 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
     return () => {
       initialMap.setTarget(null);
+      if (geolocationRef.current) {
+        geolocationRef.current.setTracking(false);
+      }
     };
   }, []);
-
-  useEffect(() => {
-    if (currentPlan !== null) {
-      if (SettlementLayerRef.current !== null) {
-        mapRef.current.removeLayer(SettlementLayerRef.current);
-      }
-      if (WellLayerRef.current !== null) {
-        mapRef.current.removeLayer(WellLayerRef.current);
-      }
-      if (WaterStructureLayerRef.current !== null) {
-        mapRef.current.removeLayer(WaterStructureLayerRef.current);
-      }
-
-      // LayerStore.updateCurrPlan(currentPlan)
-
-      let SettlementLayer = null;
-      let WaterStructureLayer = null;
-      let WellLayer = null;
-
-      SettlementLayer = getVectorLayer(
-        "resources",
-        "settlement_" +
-          currentPlan.plan_id +
-          "_" +
-          localStorage.getItem("dist_name").toLowerCase() +
-          "_" +
-          localStorage.getItem("block_name").toLowerCase(),
-        true,
-        true,
-        "settlement",
-        currentPlan.plan_id
-      );
-
-      WellLayer = getVectorLayer(
-        "resources",
-        "well_layer" + localStorage.getItem("block_name").toLowerCase(),
-        true,
-        true,
-        "well",
-        currentPlan.plan_id
-      );
-
-      WaterStructureLayer = getVectorLayer(
-        "resources",
-        "wb_layer" + localStorage.getItem("block_name").toLowerCase(),
-        true,
-        true,
-        "waterbody",
-        currentPlan.plan_id
-      );
-
-      SettlementLayer.setStyle(
-        new Style({
-          image: new Icon({ src: settlementIcon, scale: 0.4 }),
-        })
-      );
-
-      WellLayer.setStyle(function (feature) {
-        const status = feature.values_;
-        if (status.status_re in iconsDetails.socialMapping_icons.well) {
-          return new Style({
-            image: new Icon({
-              src: iconsDetails.socialMapping_icons.well[status.status_re],
-            }),
-          });
-        } else {
-          return new Style({
-            image: new Icon({
-              src: iconsDetails.socialMapping_icons.well["proposed"],
-            }),
-          });
-        }
-      });
-
-      WaterStructureLayer.setStyle(function (feature) {
-        const status = feature.values_;
-        if (status.wbs_type in iconsDetails.WB_Icons) {
-          return new Style({
-            image: new Icon({ src: iconsDetails.WB_Icons[status.wbs_type] }),
-          });
-        } else {
-          return new Style({
-            image: new Icon({ src: LargeWaterBody }),
-          });
-        }
-      });
-
-      mapRef.current.addLayer(SettlementLayer);
-      mapRef.current.addLayer(WellLayer);
-      mapRef.current.addLayer(WaterStructureLayer);
-
-      SettlementLayerRef.current = SettlementLayer;
-      WellLayerRef.current = WellLayer;
-      WaterStructureLayerRef.current = WaterStructureLayer;
-
-      // LayerStore.addLayersState("Settlement Layer", SettlementLayerRef, LayerStore.Layers);
-      // LayerStore.addLayersState("Well Layer", WellLayerRef, LayerStore.Layers);
-      // LayerStore.addLayersState("Water Structure Layer", WaterStructureLayerRef, LayerStore.Layers);
-
-      // Force a UI refresh to update the toggle states
-      // LayerStore.updateStatus(true);
-
-      mapRef.current.on("click", (e) => {
-        setInfoBoxType(null);
-
-        setShowNregaDropdown(false);
-
-        const features = mapRef.current.getFeaturesAtPixel(e.pixel, {
-          layerFilter: (layer) => layer === nregaLayerRef.current,
-        });
-
-        if (features.length > 0) {
-          setSelectedFeatures(features);
-          setInfoBoxType("nrega");
-          setShowBottomSheet(true);
-        }
-
-        mapRef.current.forEachFeatureAtPixel(e.pixel, (feature, layer) => {
-          if (layer === SettlementLayer) {
-            setSelectedFeatures(feature.values_);
-            setInfoBoxType("settlement");
-            setShowBottomSheet(true);
-          } else if (layer === WellLayer) {
-            setSelectedFeatures(feature.values_);
-            setInfoBoxType("well");
-            setShowBottomSheet(true);
-          } else if (layer === WaterStructureLayer) {
-            setSelectedFeatures(feature.values_);
-            setInfoBoxType("waterStructure");
-            setShowBottomSheet(true);
-          }
-        });
-      });
-    }
-  }, [currentPlan]);
 
   useEffect(() => {
     if (gpsLocation != null) {
@@ -790,6 +613,20 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       mapRef.current.getView().setZoom(13); // Adjust the zoom level as needed
 
       setIsInBlock(true);
+    }
+  };
+
+  const handleRefreshLocation = () => {
+    if (geolocationRef.current) {
+      toast(t("mainMap.refreshingLocation"));
+      geolocationRef.current.setTracking(false);
+      setTimeout(() => {
+        if (geolocationRef.current) {
+          geolocationRef.current.setTracking(true);
+        }
+      }, 100);
+    } else {
+      toast.error(t("mainMap.unableToRefreshLocation"));
     }
   };
 
@@ -917,6 +754,14 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
               onClick={handleInfoClick}
               isIcon={true}
               icon={faInfoCircle}
+            />
+          </div>
+
+          <div className={styles.header_secondary_button}>
+            <Button
+              onClick={handleRefreshLocation}
+              isIcon={true}
+              icon={faRedo}
             />
           </div>
 
