@@ -25,7 +25,7 @@ import { Style } from "ol/style.js";
 import TileLayer from "ol/layer/Tile";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
-import WebGLPointsLayer from 'ol/layer/WebGLPoints.js';
+import WebGLPointsLayer from "ol/layer/WebGLPoints.js";
 
 import XYZ from "ol/source/XYZ";
 import { getVectorLayer } from "../helper/utils";
@@ -34,8 +34,8 @@ import { useNavigate } from "react-router-dom";
 //** Material UI Imports **/
 import Button from "../components/Button.js";
 import { styled } from "@mui/material/styles";
-import { purple } from '@mui/material/colors';
-import { alpha } from '@mui/material/styles';
+import { purple } from "@mui/material/colors";
+import { alpha } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
@@ -62,7 +62,7 @@ import iconsDetails from "../helper/icons.json";
 
 import useNregaYears from "../hooks/useNregaYears.js";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
   const mapElement = useRef();
@@ -98,14 +98,21 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
   const { t } = useTranslation();
 
-  const { currentPlan, setFocusTrigger, zoomLevel, mapCenter, setZoomLevel, setMapCenter } = usePlansStore((state) => {
+  const {
+    currentPlan,
+    setFocusTrigger,
+    zoomLevel,
+    mapCenter,
+    setZoomLevel,
+    setMapCenter,
+  } = usePlansStore((state) => {
     return {
       currentPlan: state.currentPlan,
       setFocusTrigger: state.setFocusTrigger,
       zoomLevel: state.zoomLevel,
       mapCenter: state.mapCenter,
       setZoomLevel: state.setZoomLevel,
-      setMapCenter: state.setMapCenter
+      setMapCenter: state.setMapCenter,
     };
   });
 
@@ -120,13 +127,13 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
   //? Year Switch Component
   const PurpleSwitch = styled(Switch)(({ theme }) => ({
-    '& .MuiSwitch-switchBase.Mui-checked': {
+    "& .MuiSwitch-switchBase.Mui-checked": {
       color: purple[700],
-      '&:hover': {
+      "&:hover": {
         backgroundColor: alpha(purple[700], theme.palette.action.hoverOpacity),
       },
     },
-    '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+    "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
       backgroundColor: purple[700],
     },
   }));
@@ -160,9 +167,9 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     "Agri Impact - HH, Community": 3, // Yellow
     "SWC - Landscape level impact": 4, // Brown
     "Irrigation - Site level impact": 5, // Blue
-    "Plantation": 6, // Green
+    Plantation: 6, // Green
     "Un Identified": 7, // Lavender
-    "Default": 8, // Tan
+    Default: 8, // Tan
   };
 
   const workToColorMapping = {
@@ -171,10 +178,10 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     "Agri Impact - HH, Community": "#FFA500", // Yellow
     "SWC - Landscape level impact": "#6495ED", // Brown
     "Irrigation - Site level impact": "#1A759F", // Blue
-    "Plantation": "#52B69A", // Green
+    Plantation: "#52B69A", // Green
     "Un Identified": "#6D597A", // Lavender
-    "Default": "#EAAC8B", // Tan
-  }
+    Default: "#EAAC8B", // Tan
+  };
 
   const buttonColorMapping = {
     "Household Livelihood": [194, 103, 141, 0.7], // Maroon
@@ -182,23 +189,23 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     "Agri Impact - HH, Community": [255, 165, 0, 0.7], // Yellow
     "SWC - Landscape level impact": [100, 149, 237, 0.7], // Brown
     "Irrigation - Site level impact": [26, 117, 159, 0.7], // Blue
-    "Plantation": [82, 182, 154, 0.7], // Green
+    Plantation: [82, 182, 154, 0.7], // Green
     "Un Identified": [109, 89, 122, 0.7], // Lavender
     Default: [234, 172, 139, 0.7], // Tan
-  }
+  };
 
   const [nregaStyle, setNregaStyle] = useState({
-    filter: ['in', ['get', 'workYear'], []],
-    'shape-points': 10,
-    'shape-radius': 13,
-    'shape-fill-color': [
-      'match',
-      ['get', 'itemColor'],
+    filter: ["in", ["get", "workYear"], []],
+    "shape-points": 10,
+    "shape-radius": 13,
+    "shape-fill-color": [
+      "match",
+      ["get", "itemColor"],
       4,
-      '#6495ED',
-      '#00000000'
+      "#6495ED",
+      "#00000000",
     ],
-  })
+  });
 
   const navigate = useNavigate();
 
@@ -216,8 +223,10 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
   };
 
   const handleGroundWaterButtonClick = () => {
-    var arr = mapRef.current.getView().calculateExtent(mapRef.current.getSize());
-    setMapCenter([(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2])
+    var arr = mapRef.current
+      .getView()
+      .calculateExtent(mapRef.current.getSize());
+    setMapCenter([(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2]);
     const url =
       "/water?geoserver_url=" +
       localStorage.getItem("geoserver_url") +
@@ -233,8 +242,10 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
   };
 
   const handleWaterBodiesButtonClick = () => {
-    var arr = mapRef.current.getView().calculateExtent(mapRef.current.getSize());
-    setMapCenter([(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2])
+    var arr = mapRef.current
+      .getView()
+      .calculateExtent(mapRef.current.getSize());
+    setMapCenter([(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2]);
     const url =
       "/waterbodies?geoserver_url=" +
       localStorage.getItem("geoserver_url") +
@@ -254,9 +265,11 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       setFocusTrigger(false);
       // let tempSource = adminLayerRef.current.getSource()
       // let arr = tempSource.getExtent();
-      // 
-      var arr = mapRef.current.getView().calculateExtent(mapRef.current.getSize());
-      setMapCenter([(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2])
+      //
+      var arr = mapRef.current
+        .getView()
+        .calculateExtent(mapRef.current.getSize());
+      setMapCenter([(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2]);
       const url =
         "/socialmapping?geoserver_url=" +
         localStorage.getItem("geoserver_url") +
@@ -276,8 +289,10 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
   };
 
   const handleAgriButtonClick = () => {
-    var arr = mapRef.current.getView().calculateExtent(mapRef.current.getSize());
-    setMapCenter([(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2])
+    var arr = mapRef.current
+      .getView()
+      .calculateExtent(mapRef.current.getSize());
+    setMapCenter([(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2]);
     const url =
       "/agri?geoserver_url=" +
       localStorage.getItem("geoserver_url") +
@@ -293,8 +308,10 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
   };
 
   const handleLivelihoodButtonClick = () => {
-    var arr = mapRef.current.getView().calculateExtent(mapRef.current.getSize());
-    setMapCenter([(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2])
+    var arr = mapRef.current
+      .getView()
+      .calculateExtent(mapRef.current.getSize());
+    setMapCenter([(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2]);
     const url =
       "/livelihood?geoserver_url=" +
       localStorage.getItem("geoserver_url") +
@@ -310,8 +327,10 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
   };
 
   const handleForestButtonClick = () => {
-    var arr = mapRef.current.getView().calculateExtent(mapRef.current.getSize());
-    setMapCenter([(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2])
+    var arr = mapRef.current
+      .getView()
+      .calculateExtent(mapRef.current.getSize());
+    setMapCenter([(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2]);
     const url =
       "/forest?&block_pkey=" +
       localStorage.getItem("block_pkey") +
@@ -322,14 +341,20 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       "&block_name=" +
       localStorage.getItem("block_name");
     navigate(url);
-  }
+  };
 
   // MARK: Query Params
   //Grabbing info from the URL
   const queryParameters = new URLSearchParams(window.location.search);
   localStorage.setItem("app_name", queryParameters.get("app_name"));
-  localStorage.setItem("dist_name", queryParameters.get("dist_name").replace(/ /g, "_"));
-  localStorage.setItem("block_name", queryParameters.get("block_name").replace(/ /g, "_"));
+  localStorage.setItem(
+    "dist_name",
+    queryParameters.get("dist_name").replace(/ /g, "_")
+  );
+  localStorage.setItem(
+    "block_name",
+    queryParameters.get("block_name").replace(/ /g, "_")
+  );
   localStorage.setItem(
     "plan_id",
     planIds[queryParameters.get("block_name").toLowerCase()]
@@ -383,8 +408,8 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     NregaLayer = getVectorLayer(
       "nrega_assets",
       localStorage.getItem("dist_name").toLowerCase() +
-      "_" +
-      localStorage.getItem("block_name").toLowerCase(),
+        "_" +
+        localStorage.getItem("block_name").toLowerCase(),
       true,
       true,
       null,
@@ -395,7 +420,9 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
     AdminLayer = getVectorLayer(
       "panchayat_boundaries",
-      localStorage.getItem("dist_name").toLowerCase() + "_" + localStorage.getItem("block_name").toLowerCase(),
+      localStorage.getItem("dist_name").toLowerCase() +
+        "_" +
+        localStorage.getItem("block_name").toLowerCase(),
       true,
       false
     );
@@ -482,16 +509,16 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
       if (features.length > 0) {
         setSelectedFeatures(features);
-        setInfoBoxType("nrega")
+        setInfoBoxType("nrega");
         setShowBottomSheet(true);
       }
     });
 
     // MARK: Code for retaining Zoom levels
-    mapRef.current.on('moveend', (e) => {
-      let newZoom = mapRef.current.getView().getZoom()
-      setZoomLevel(newZoom)
-    })
+    mapRef.current.on("moveend", (e) => {
+      let newZoom = mapRef.current.getView().getZoom();
+      setZoomLevel(newZoom);
+    });
 
     //? Centering the map to the selected block
     const Vectorsource = AdminLayer.getSource();
@@ -502,8 +529,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
           const mapcenter = [(arr[0] + arr[2]) / 2, (arr[1] + arr[3]) / 2];
           initialMap.getView().setZoom(13);
           initialMap.getView().setCenter(mapcenter);
-        }
-        else {
+        } else {
           initialMap.getView().setZoom(zoomLevel);
           initialMap.getView().setCenter(mapCenter);
         }
@@ -521,12 +547,19 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       projection: view.getProjection(),
     });
 
-    geolocation.on("change:accuracyGeometry", function () {
-      accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
-    });
+    console.log("Geolocation: Attempting to start tracking...");
+    geolocation.setTracking(true);
+    console.log(
+      "Geolocation: Tracking status after setTracking(true):",
+      geolocation.getTracking()
+    );
 
-    geolocation.on("change", function () {
+    geolocation.on("change:position", function () {
       const coordinates = geolocation.getPosition();
+      console.log(
+        "OL Geolocation 'change:position' event. Coords:",
+        coordinates
+      ); // DEBUG LOG
       setGpsLocation(coordinates);
       const accuracy = geolocation.getAccuracy();
       positionFeatureRef.current.setGeometry(
@@ -534,7 +567,10 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       );
     });
 
-    geolocation.setTracking(true);
+    geolocation.on("error", function (error) {
+      console.error("OL Geolocation error:", error.message, error);
+      // Example: error.code can be 1 (PERMISSION_DENIED), 2 (POSITION_UNAVAILABLE), 3 (TIMEOUT)
+    });
 
     new VectorLayer({
       map: initialMap,
@@ -542,7 +578,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
         features: [accuracyFeature, positionFeature],
       }),
     });
-    
+
     setIsLoading(false);
 
     return () => {
@@ -552,10 +588,15 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
   useEffect(() => {
     if (currentPlan !== null) {
-
-      if (SettlementLayerRef.current !== null) { mapRef.current.removeLayer(SettlementLayerRef.current) }
-      if (WellLayerRef.current !== null) { mapRef.current.removeLayer(WellLayerRef.current) }
-      if (WaterStructureLayerRef.current !== null) { mapRef.current.removeLayer(WaterStructureLayerRef.current) }
+      if (SettlementLayerRef.current !== null) {
+        mapRef.current.removeLayer(SettlementLayerRef.current);
+      }
+      if (WellLayerRef.current !== null) {
+        mapRef.current.removeLayer(WellLayerRef.current);
+      }
+      if (WaterStructureLayerRef.current !== null) {
+        mapRef.current.removeLayer(WaterStructureLayerRef.current);
+      }
 
       // LayerStore.updateCurrPlan(currentPlan)
 
@@ -565,7 +606,12 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
       SettlementLayer = getVectorLayer(
         "resources",
-        "settlement_" + currentPlan.plan_id + "_" + localStorage.getItem("dist_name").toLowerCase() + "_" + localStorage.getItem("block_name").toLowerCase(),
+        "settlement_" +
+          currentPlan.plan_id +
+          "_" +
+          localStorage.getItem("dist_name").toLowerCase() +
+          "_" +
+          localStorage.getItem("block_name").toLowerCase(),
         true,
         true,
         "settlement",
@@ -598,39 +644,41 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
       WellLayer.setStyle(function (feature) {
         const status = feature.values_;
-        if(status.status_re in iconsDetails.socialMapping_icons.well){
-            return new Style({
-                image: new Icon({ src: iconsDetails.socialMapping_icons.well[status.status_re] }),
-            })
-        }
-        else{
-            return new Style({
-                image: new Icon({ src: iconsDetails.socialMapping_icons.well["proposed"] }),
-            })
+        if (status.status_re in iconsDetails.socialMapping_icons.well) {
+          return new Style({
+            image: new Icon({
+              src: iconsDetails.socialMapping_icons.well[status.status_re],
+            }),
+          });
+        } else {
+          return new Style({
+            image: new Icon({
+              src: iconsDetails.socialMapping_icons.well["proposed"],
+            }),
+          });
         }
       });
 
       WaterStructureLayer.setStyle(function (feature) {
         const status = feature.values_;
-        if(status.wbs_type in iconsDetails.WB_Icons){
-            return new Style({
-                image: new Icon({ src: iconsDetails.WB_Icons[status.wbs_type] }),
-            })
-        }
-        else{
-            return new Style({
-                image: new Icon({ src: LargeWaterBody }),
-            })
+        if (status.wbs_type in iconsDetails.WB_Icons) {
+          return new Style({
+            image: new Icon({ src: iconsDetails.WB_Icons[status.wbs_type] }),
+          });
+        } else {
+          return new Style({
+            image: new Icon({ src: LargeWaterBody }),
+          });
         }
       });
 
-      mapRef.current.addLayer(SettlementLayer)
-      mapRef.current.addLayer(WellLayer)
-      mapRef.current.addLayer(WaterStructureLayer)
+      mapRef.current.addLayer(SettlementLayer);
+      mapRef.current.addLayer(WellLayer);
+      mapRef.current.addLayer(WaterStructureLayer);
 
-      SettlementLayerRef.current = SettlementLayer
-      WellLayerRef.current = WellLayer
-      WaterStructureLayerRef.current = WaterStructureLayer
+      SettlementLayerRef.current = SettlementLayer;
+      WellLayerRef.current = WellLayer;
+      WaterStructureLayerRef.current = WaterStructureLayer;
 
       // LayerStore.addLayersState("Settlement Layer", SettlementLayerRef, LayerStore.Layers);
       // LayerStore.addLayersState("Well Layer", WellLayerRef, LayerStore.Layers);
@@ -640,7 +688,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       // LayerStore.updateStatus(true);
 
       mapRef.current.on("click", (e) => {
-        setInfoBoxType(null)
+        setInfoBoxType(null);
 
         setShowNregaDropdown(false);
 
@@ -650,30 +698,28 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
 
         if (features.length > 0) {
           setSelectedFeatures(features);
-          setInfoBoxType("nrega")
+          setInfoBoxType("nrega");
           setShowBottomSheet(true);
         }
 
         mapRef.current.forEachFeatureAtPixel(e.pixel, (feature, layer) => {
           if (layer === SettlementLayer) {
-            setSelectedFeatures(feature.values_)
-            setInfoBoxType("settlement")
+            setSelectedFeatures(feature.values_);
+            setInfoBoxType("settlement");
+            setShowBottomSheet(true);
+          } else if (layer === WellLayer) {
+            setSelectedFeatures(feature.values_);
+            setInfoBoxType("well");
+            setShowBottomSheet(true);
+          } else if (layer === WaterStructureLayer) {
+            setSelectedFeatures(feature.values_);
+            setInfoBoxType("waterStructure");
             setShowBottomSheet(true);
           }
-          else if (layer === WellLayer) {
-            setSelectedFeatures(feature.values_)
-            setInfoBoxType("well")
-            setShowBottomSheet(true);
-          }
-          else if (layer === WaterStructureLayer) {
-            setSelectedFeatures(feature.values_)
-            setInfoBoxType("waterStructure")
-            setShowBottomSheet(true);
-          }
-        })
+        });
       });
     }
-  }, [currentPlan])
+  }, [currentPlan]);
 
   useEffect(() => {
     if (gpsLocation != null) {
@@ -750,7 +796,7 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
   // MARK: NREGA Works Toggle
   const handleWorksToggle = async (item) => {
     let checked = nregaWorks.includes(item);
-    let temp_works
+    let temp_works;
     if (!checked) {
       temp_works = [...nregaWorks];
       temp_works.push(item);
@@ -760,26 +806,25 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       setNregaWorks(temp_works);
     }
 
-    let styleFillColor = ['match', ['get', 'itemColor']]
+    let styleFillColor = ["match", ["get", "itemColor"]];
 
     temp_works.map((temp_item) => {
       styleFillColor.push(workToNumMapping[temp_item]);
       styleFillColor.push(workToColorMapping[temp_item]);
-    })
+    });
 
-    styleFillColor.push('#00000000')
+    styleFillColor.push("#00000000");
 
     if (temp_works.length === 0) {
-      styleFillColor = '#00000000'
+      styleFillColor = "#00000000";
     }
 
     let tempNregaStyle = {
       filter: nregaStyle.filter,
-      'shape-points': nregaStyle['shape-points'],
-      'shape-radius': nregaStyle['shape-radius'],
-      'shape-fill-color': styleFillColor
-    }
-
+      "shape-points": nregaStyle["shape-points"],
+      "shape-radius": nregaStyle["shape-radius"],
+      "shape-fill-color": styleFillColor,
+    };
 
     setNregaStyle(tempNregaStyle);
 
@@ -789,16 +834,16 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     let nregaWebGlLayer = new WebGLPointsLayer({
       source: nregaVectorSource,
       style: tempNregaStyle,
-    })
+    });
 
     nregaLayerRef.current = nregaWebGlLayer;
 
-    mapRef.current.addLayer(nregaWebGlLayer)
+    mapRef.current.addLayer(nregaWebGlLayer);
   };
 
   // MARK: NREGA Year Toggle
   const handleNregaYearToggle = async (temp_year) => {
-    let temp_active_years = []
+    let temp_active_years = [];
     if (activeYears.includes(temp_year)) {
       temp_active_years = activeYears.filter((year) => year != temp_year);
       setActiveYears(temp_active_years);
@@ -808,15 +853,14 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       setActiveYears(temp_active_years);
     }
 
-    let tempFilter = ['in', ['get', 'workYear'], temp_active_years]
+    let tempFilter = ["in", ["get", "workYear"], temp_active_years];
 
     let tempNregaStyle = {
       filter: tempFilter,
-      'shape-points': nregaStyle['shape-points'],
-      'shape-radius': nregaStyle['shape-radius'],
-      'shape-fill-color': nregaStyle['shape-fill-color']
-    }
-
+      "shape-points": nregaStyle["shape-points"],
+      "shape-radius": nregaStyle["shape-radius"],
+      "shape-fill-color": nregaStyle["shape-fill-color"],
+    };
 
     setNregaStyle(tempNregaStyle);
 
@@ -826,12 +870,11 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
     let nregaWebGlLayer = new WebGLPointsLayer({
       source: nregaVectorSource,
       style: tempNregaStyle,
-    })
+    });
 
     nregaLayerRef.current = nregaWebGlLayer;
 
-    mapRef.current.addLayer(nregaLayerRef.current)
-
+    mapRef.current.addLayer(nregaLayerRef.current);
   };
 
   const handlePlanningClick = () => {
@@ -839,10 +882,12 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
       setFocusTrigger(false);
       setPlanningState(!planningState);
     } else {
-      toast.error(t("select_plan"), {duration: 700});
+      toast.error(t("select_plan"), { duration: 700 });
       setFocusTrigger(true);
     }
   };
+
+  console.log("MainMap render - gpsLocation:", gpsLocation); // DEBUG LOG
 
   return (
     <>
@@ -894,16 +939,28 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
           <div className={styles.footer_planning}>
             {planningState && (
               <div className={styles.footer_planning_menu}>
-                <Button onClick={handleGroundWaterButtonClick} label={t("GroundWater")} />
-                <Button onClick={handleWaterBodiesButtonClick} label={t("Surface WaterBodies")} />
+                <Button
+                  onClick={handleGroundWaterButtonClick}
+                  label={t("GroundWater")}
+                />
+                <Button
+                  onClick={handleWaterBodiesButtonClick}
+                  label={t("Surface WaterBodies")}
+                />
                 <Button onClick={handleAgriButtonClick} label={t("Agri")} />
-                <Button onClick={handleLivelihoodButtonClick} label={t("Livelihood")} />
+                <Button
+                  onClick={handleLivelihoodButtonClick}
+                  label={t("Livelihood")}
+                />
                 {/* <Button onClick={handleForestButtonClick} label={"Forest"} /> */}
               </div>
             )}
           </div>
           <div className={styles.footer_buttons_main_group}>
-            <Button onClick={handleSmButtonClick} label={t("Resource Mapping")} />
+            <Button
+              onClick={handleSmButtonClick}
+              label={t("Resource Mapping")}
+            />
             <Button onClick={handlePlanningClick} label={t("Planning")} />
           </div>
         </div>
@@ -917,26 +974,32 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
                 {t("Select NREGA Works")}
               </div>
               <div className={styles.nrega_section}>
-                <div className={styles.nrega_title}>{t("NREGA Work Categories")}</div>
+                <div className={styles.nrega_title}>
+                  {t("NREGA Work Categories")}
+                </div>
                 <div className={styles.chips_nrega_dropdown}>
                   {works.map((item, idx) => {
-                    const color = [buttonColorMapping[item], buttonColorMapping.Default];
+                    const color = [
+                      buttonColorMapping[item],
+                      buttonColorMapping.Default,
+                    ];
                     return (
                       <button
                         key={idx}
                         style={{
-                          backgroundColor: `${nregaWorks.includes(item)
-                            ? `rgba(${color[0].join(",")})`
-                            : ""
-                            }`,
-                          border: 'none',
-                          color: 'black',
-                          padding: '10px 20px',
-                          textAlign: 'center',
-                          textDecoration: 'none',
-                          display: 'inline-block',
-                          margin: '4px 2px',
-                          borderRadius: '16px'
+                          backgroundColor: `${
+                            nregaWorks.includes(item)
+                              ? `rgba(${color[0].join(",")})`
+                              : ""
+                          }`,
+                          border: "none",
+                          color: "black",
+                          padding: "10px 20px",
+                          textAlign: "center",
+                          textDecoration: "none",
+                          display: "inline-block",
+                          margin: "4px 2px",
+                          borderRadius: "16px",
                         }}
                         onClick={() => handleWorksToggle(item)}
                       >
@@ -946,7 +1009,9 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
                   })}
                 </div>
 
-                <div className={styles.nrega_title}>{t("Filter NREGA Works")}</div>
+                <div className={styles.nrega_title}>
+                  {t("Filter NREGA Works")}
+                </div>
                 <div className={styles.chips_nrega_dropdown}>
                   {nregaYears != null &&
                     nregaYears.map((item) => {
@@ -954,7 +1019,9 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
                         <FormControlLabel
                           control={
                             <PurpleSwitch
-                              checked={activeYears.includes(item) ? true : false}
+                              checked={
+                                activeYears.includes(item) ? true : false
+                              }
                               onChange={() => handleNregaYearToggle(item)}
                             />
                           }
@@ -964,7 +1031,6 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
                       );
                     })}
                 </div>
-
               </div>
 
               <div></div>
@@ -977,7 +1043,8 @@ function MainMap({ setScreenTitle, setScreenIcon, setGpsLocationMain }) {
           features={selectedFeatures}
           isOpen={showBottomSheet}
           onClose={() => {
-            setShowBottomSheet(false); setInfoBoxType(null);
+            setShowBottomSheet(false);
+            setInfoBoxType(null);
           }}
           infoType={infoBoxType}
         />
