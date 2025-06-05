@@ -141,23 +141,6 @@ function App() {
                 </div>
             )}
 
-            <div className="bottom-bar-banner">
-                <div className="bottom-banner-main">
-                    {settlementName !== null && (
-                        <div className="bottom-banner-text">
-                            <strong>Settlement:</strong> {settlementName}
-                        </div>
-                    )}                    
-                    <div className="bottom-banner-text"><strong>Lat:</strong>{" "}{gpsLocationMain !== null ? Math.round(gpsLocationMain[1] * 100) / 100 : "Location not found."}</div>
-                    <div className="bottom-banner-text"><strong>Long:</strong>{" "}{gpsLocationMain !== null ? Math.round(gpsLocationMain[0] * 100) / 100 : "Location not found."}</div>
-                    <div>
-                        <button className="bottom-copy-button" onClick={handleLatLongClick}>
-                            <FontAwesomeIcon icon={faCopy} className="" />
-                        </button>
-                    </div>
-                </div>
-            </div>
-
             <div className="location-selector-modal">
                 <MainScreenModal />
             </div>
