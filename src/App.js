@@ -16,7 +16,7 @@ import MainScreenModal from "./components/MainScreenModal.js";
 import Livelihood from "./livelihood/Livelihood.js";
 import usePlansStore from "./hooks/usePlans.js";
 
-import blockIds from './block_id.json'
+import blockIds from './block_id.json';
 import { api_url } from "./helper/constants.js";
 import useOdkModal from "./hooks/useOdkModal.js";
 
@@ -75,7 +75,7 @@ function App() {
 
         function offlineHandler() {
             setIsOnline(false);
-            console.log("User is Offline !");
+            console.log("User is Offline!");
         }
 
         function updateDimension() {

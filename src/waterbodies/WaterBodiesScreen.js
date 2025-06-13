@@ -318,7 +318,7 @@ function WaterBodiesScreen({
     }
 
     if (waterBodiesLayer === null) {
-      waterBodiesLayer = getVectorLayer("water_bodies", waterBodyLayerName, true, true);
+      waterBodiesLayer = getVectorLayer("swb", waterBodyLayerName, true, true);
     }
 
     if (nregaLayer === null) {
